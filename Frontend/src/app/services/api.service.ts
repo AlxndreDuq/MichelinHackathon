@@ -10,7 +10,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = import.meta.env.NG_APP_API_URL;
 
   getRoot(): Observable<string> {
     return this.http.get<string>(this.apiUrl);
