@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:#15140F;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    ::-webkit-scrollbar{width:0;height:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes popin{0%{transform:scale(.97);opacity:0}100%{transform:scale(1);opacity:1}}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 4px #FFCB1A,5px 5px 0 #15140F}50%{box-shadow:0 0 0 8px rgba(255,203,26,.55),5px 5px 0 #15140F}}
+  </style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;width:100%;overflow:hidden;background:#0B1E48;padding:46px 26px;display:flex;justify-content:center">
+  <div style="position:absolute;inset:0;background-image:url('assets/nature-cycling.png');background-size:cover;background-position:center;background-repeat:no-repeat"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg, rgba(31,75,160,.60), rgba(11,30,72,.82))"></div>
+  <div style="position:relative;z-index:1;width:100%;max-width:1160px;display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:54px;align-items:center">
+
+    <!-- ===================== LEFT / BRAND ===================== -->
+    <div style="padding-bottom:8px">
+      <div style="display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:2.5px solid #15140F;border-radius:999px;background:#FFCB1A;box-shadow:3px 3px 0 #15140F;font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase">Une application MICHELIN</div>
+      <h1 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:74px;line-height:.9;margin:20px 0 0;letter-spacing:.01em;color:#FFCB1A;text-shadow:0 2px 14px rgba(0,0,0,.25)">MICHELIN</h1>
+      <div style="height:13px;width:340px;max-width:100%;background:#FFCB1A;border:2.5px solid #15140F;border-radius:6px;box-shadow:3px 3px 0 #15140F;margin:9px 0 18px"></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap">
+        <span style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:30px;color:#fff">Borne<span style="color:#FFCB1A">.</span></span>
+        <span style="font-weight:700;font-size:16px;color:#E9E2CF">le jeu de parcours vélo de ta région.</span>
+      </div>
+      <p style="font-size:19px;line-height:1.5;font-weight:600;max-width:450px;margin:0 0 26px;color:#EFE9D8;text-shadow:0 1px 10px rgba(0,0,0,.3)">Grimpe la carte des parcours, bats les chronos, gagne tes étoiles. Les ambassadeurs créent les niveaux, MICHELIN te conseille le pneu. À toi de jouer.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;max-width:470px;margin-bottom:30px">
+        <span style="padding:8px 15px;border:2.5px solid #15140F;border-radius:999px;font-weight:800;font-size:13px;background:#FFCB1A;box-shadow:3px 3px 0 #15140F">Convivialité</span>
+        <span style="padding:8px 15px;border:2.5px solid #15140F;border-radius:999px;font-weight:800;font-size:13px;background:#7E9B5B;color:#fff;box-shadow:3px 3px 0 #15140F">Écologie</span>
+        <span style="padding:8px 15px;border:2.5px solid #15140F;border-radius:999px;font-weight:800;font-size:13px;background:#fff;box-shadow:3px 3px 0 #15140F">Aventure</span>
+        <span style="padding:8px 15px;border:2.5px solid #15140F;border-radius:999px;font-weight:800;font-size:13px;background:#1F4BA0;color:#fff;box-shadow:3px 3px 0 #15140F">Dépassement</span>
+      </div>
+      <div style="border:2.5px solid #15140F;border-radius:20px;background:#fff;box-shadow:5px 5px 0 #15140F;padding:17px 19px;max-width:460px">
+        <div style="font-weight:800;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#1F4BA0;margin-bottom:14px">La boucle du jeu</div>
+        <div style="display:flex;flex-direction:column;gap:13px">
+          <div style="display:flex;align-items:center;gap:13px">
+            <span style="width:30px;height:30px;flex-shrink:0;border-radius:9px;border:2.5px solid #15140F;background:#FFCB1A;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;box-shadow:2px 2px 0 #15140F">1</span>
+            <span style="font-weight:700;font-size:14.5px">Un <strong>ambassadeur crée un parcours</strong> et recommande la config.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:13px">
+            <span style="width:30px;height:30px;flex-shrink:0;border-radius:9px;border:2.5px solid #15140F;background:#1F4BA0;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;box-shadow:2px 2px 0 #15140F">2</span>
+            <span style="font-weight:700;font-size:14.5px">Tu le joues, <strong>Strava chrono</strong> ton temps sur le classement.</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:13px">
+            <span style="width:30px;height:30px;flex-shrink:0;border-radius:9px;border:2.5px solid #15140F;background:#7E9B5B;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;box-shadow:2px 2px 0 #15140F">3</span>
+            <span style="font-weight:700;font-size:14.5px">Étoiles, médailles, rangs — et <strong>le pneu MICHELIN idéal</strong>.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== PHONE ===================== -->
+    <div style="width:392px;height:812px;background:#1F4BA0;border:3px solid #15140F;border-radius:48px;box-shadow:10px 10px 0 #15140F;padding:11px;position:relative">
+      <div style="height:100%;border-radius:38px;overflow:hidden;background:#F3EAD3;display:flex;flex-direction:column;position:relative">
+
+        <!-- status bar -->
+        <div style="height:38px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#F3EAD3;font-weight:800;font-size:13px;position:relative;z-index:5">
+          <span>9:41</span>
+          <div style="position:absolute;left:50%;top:9px;transform:translateX(-50%);width:88px;height:20px;background:#15140F;border-radius:999px"></div>
+          <div style="display:flex;gap:5px;align-items:center">
+            <span style="width:18px;height:9px;border:2px solid #15140F;border-radius:3px;display:inline-block"></span>
+            <span style="width:14px;height:9px;background:#15140F;border-radius:2px;display:inline-block"></span>
+          </div>
+        </div>
+
+        <!-- masthead -->
+        <div style="flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:4px 18px 10px;background:#F3EAD3;z-index:4">
+          <div style="display:flex;flex-direction:column">
+            <span style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;color:#1F4BA0;letter-spacing:.02em;line-height:1">MICHELIN</span>
+            <span style="font-weight:800;font-size:11px;color:#6f6852;letter-spacing:.03em">Borne · Parcours</span>
+          </div>
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border:2.5px solid #15140F;border-radius:999px;background:#FFCB1A;font-weight:800;font-size:12px;box-shadow:2.5px 2.5px 0 #15140F"><span style="width:11px;height:11px;border-radius:50%;background:#E8B43A;border:1.5px solid #15140F"></span>Rang Or</span>
+        </div>
+
+        <!-- SCROLL CONTENT -->
+        <div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+
+          <!-- ============ ACCUEIL — CARTE ============ -->
+          <sc-if value="{{ showAccueil }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 0 24px;animation:popin .25s ease">
+            <div style="padding:2px 18px 10px">
+              <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:21px;line-height:1">Carte des parcours</div>
+              <div style="font-weight:700;font-size:12.5px;color:#6f6852">{{ dept }} · choisis ton prochain défi</div>
+            </div>
+
+            <div style="position:relative;height:{{ mapHpx }};margin:0 6px">
+              <!-- scenery -->
+              <div style="position:absolute;left:-16px;top:300px;width:170px;height:130px;background:#7E9B5B;opacity:.16;clip-path:polygon(50% 0,100% 100%,0 100%)"></div>
+              <div style="position:absolute;right:-24px;top:150px;width:200px;height:150px;background:#1F4BA0;opacity:.12;clip-path:polygon(50% 0,100% 100%,0 100%)"></div>
+              <div style="position:absolute;left:30px;top:620px;width:130px;height:100px;background:#D4533A;opacity:.12;clip-path:polygon(50% 0,100% 100%,0 100%)"></div>
+
+              <!-- trail -->
+              <svg width="356" height="{{ mapH }}" viewBox="0 0 356 {{ mapH }}" style="position:absolute;inset:0;z-index:1"><path d="{{ pathD }}" fill="none" stroke="#15140F" stroke-width="5" stroke-dasharray="1 15" stroke-linecap="round" opacity="0.55"></path></svg>
+
+              <!-- side quest -->
+              <div onClick="{{ challenge.onPlay }}" style="position:absolute;top:4px;right:6px;width:154px;border:3px solid #15140F;border-radius:17px;background:#FFCB1A;box-shadow:4px 4px 0 #15140F;padding:11px;z-index:3;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #15140F">
+                <span style="display:inline-block;padding:2px 8px;border:2px solid #15140F;border-radius:999px;background:#1F4BA0;color:#fff;font-weight:800;font-size:9px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px">Side quest</span>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;line-height:1.05">Défi de la semaine</div>
+                <div style="font-weight:700;font-size:11px;color:#3a352a;margin:3px 0 9px">{{ challenge.name }} · {{ challenge.reward }}</div>
+                <div style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:2px solid #15140F;border-radius:999px;background:#fff;font-weight:800;font-size:11px;box-shadow:2px 2px 0 #15140F">Jouer <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#15140F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></div>
+              </div>
+
+              <!-- nodes -->
+              <sc-for list="{{ nodes }}" as="n" hint-placeholder-count="7">
+                <div style="{{ n.wrapStyle }}">
+                  <sc-if value="{{ n.completed }}"><div style="{{ n.starStyle }}">{{ n.stars }}</div></sc-if>
+                  <button onClick="{{ n.onClick }}" style="{{ n.circleStyle }}">
+                    <sc-if value="{{ n.locked }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6f6852" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></sc-if>
+                    <sc-if value="{{ n.showNum }}">{{ n.num }}</sc-if>
+                  </button>
+                  <div style="{{ n.nameStyle }}">{{ n.name }}</div>
+                  <sc-if value="{{ n.current }}"><div style="margin-top:5px;padding:3px 10px;border:2px solid #15140F;border-radius:999px;background:#FFCB1A;font-weight:800;font-size:10px;box-shadow:2px 2px 0 #15140F">JOUER ▸</div></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- ============ RUN DETAIL ============ -->
+          <sc-if value="{{ showRun }}">
+          <div style="padding:0 0 26px;animation:popin .25s ease">
+            <div style="position:relative;height:206px;background-image:url('assets/nature-cycling.png');background-size:cover;background-position:center;border-bottom:3px solid #15140F">
+              <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(11,30,72,.92), rgba(11,30,72,.15) 55%, rgba(11,30,72,.05))"></div>
+              <button onClick="{{ closeRun }}" style="position:absolute;top:14px;left:14px;width:38px;height:38px;border:2.5px solid #15140F;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:2.5px 2.5px 0 #15140F">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#15140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <div style="position:absolute;left:16px;right:16px;bottom:14px;color:#fff">
+                <span style="{{ run.tierBadgeStyle }}">Niveau {{ run.t.label }} · {{ run.t.sub }}</span>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:26px;line-height:1.04;margin-top:8px;text-shadow:0 1px 8px rgba(0,0,0,.4)">{{ run.name }}</div>
+                <div style="font-weight:800;font-size:12.5px;opacity:.95;margin-top:3px">Créé par {{ run.creator }} · Ambassadeur</div>
+              </div>
+            </div>
+
+            <div style="padding:15px 18px 0">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:15px">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="display:flex;gap:1px"><sc-for list="{{ run.starCells }}" as="s" hint-placeholder-count="5"><span style="{{ s.style }}">★</span></sc-for></div>
+                  <span style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px">{{ run.starsTxt }}</span>
+                  <span style="font-weight:700;font-size:12px;color:#8a8068">({{ run.reviewsTxt }})</span>
+                </div>
+                <span style="font-weight:800;font-size:12px;color:#1F4BA0">{{ run.playsTxt }}</span>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:18px">
+                <div style="border:2.5px solid #15140F;border-radius:14px;padding:10px;background:#fff;box-shadow:3px 3px 0 #15140F"><div style="font-weight:700;font-size:10.5px;color:#6f6852">Distance</div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px">{{ run.distTxt }}</div></div>
+                <div style="border:2.5px solid #15140F;border-radius:14px;padding:10px;background:#fff;box-shadow:3px 3px 0 #15140F"><div style="font-weight:700;font-size:10.5px;color:#6f6852">Dénivelé</div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px">{{ run.denivTxt }}</div></div>
+                <div style="border:2.5px solid #15140F;border-radius:14px;padding:10px;background:#fff;box-shadow:3px 3px 0 #15140F"><div style="font-weight:700;font-size:10.5px;color:#6f6852">Record</div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px">{{ run.time }}</div></div>
+              </div>
+
+              <!-- recommended config -->
+              <div style="border:3px solid #15140F;border-radius:20px;background:#1F4BA0;color:#F3EAD3;padding:16px;box-shadow:5px 5px 0 #15140F;margin-bottom:20px">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                  <span style="padding:4px 10px;border:2px solid #15140F;border-radius:999px;background:#FFCB1A;color:#15140F;font-weight:800;font-size:10px;letter-spacing:.04em;text-transform:uppercase;box-shadow:2px 2px 0 #15140F">Reco du créateur</span>
+                </div>
+                <div style="display:flex;gap:9px;margin-bottom:11px">
+                  <span style="padding:5px 12px;border:2px solid #F3EAD3;border-radius:10px;font-weight:800;font-size:13px">Vélo : {{ run.bikeTxt }}</span>
+                  <span style="padding:5px 12px;border:2px solid #FFCB1A;border-radius:10px;background:#FFCB1A;color:#15140F;font-weight:800;font-size:13px">{{ run.tireTxt }}</span>
+                </div>
+                <p style="font-weight:600;font-size:13px;line-height:1.5;margin:0;opacity:.95">“{{ run.note }}”</p>
+              </div>
+
+              <!-- per-run leaderboard -->
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px">
+                <h3 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;margin:0">Classement du parcours</h3>
+                <span style="font-weight:800;font-size:11px;color:#8a8068">Meilleur temps</span>
+              </div>
+              <div style="margin-bottom:20px">
+                <sc-for list="{{ run.board }}" as="p" hint-placeholder-count="5">
+                  <div style="{{ p.rowStyle }}">
+                    <span style="{{ p.rankStyle }}">{{ p.rank }}</span>
+                    <div style="{{ p.avStyle }}">{{ p.init }}</div>
+                    <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:13.5px">{{ p.nm }}</div></div>
+                    <span style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:14px">{{ p.time }}</span>
+                  </div>
+                </sc-for>
+              </div>
+
+              <!-- reviews -->
+              <h3 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;margin:0 0 11px">Avis des riders</h3>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+                <sc-for list="{{ run.reviews }}" as="rv" hint-placeholder-count="2">
+                  <div style="border:2.5px solid #15140F;border-radius:15px;background:#fff;padding:12px;box-shadow:3px 3px 0 #15140F">
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
+                      <div style="width:30px;height:30px;border-radius:9px;border:2.5px solid #15140F;background:#7E9B5B;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px">{{ rv.init }}</div>
+                      <span style="font-weight:800;font-size:13px;flex:1">{{ rv.name }}</span>
+                      <div style="display:flex;gap:1px"><sc-for list="{{ rv.starCells }}" as="s" hint-placeholder-count="5"><span style="{{ s.style }}">★</span></sc-for></div>
+                    </div>
+                    <p style="font-weight:600;font-size:12.5px;line-height:1.4;margin:0;color:#3a352a">{{ rv.txt }}</p>
+                  </div>
+                </sc-for>
+              </div>
+
+              <!-- CTA -->
+              <sc-if value="{{ notPlaying }}">
+              <button onClick="{{ play }}" style="width:100%;padding:16px;border:3px solid #15140F;border-radius:18px;background:#FFCB1A;font-family:'Fredoka',sans-serif;font-weight:700;font-size:19px;cursor:pointer;box-shadow:5px 5px 0 #15140F;display:flex;align-items:center;justify-content:center;gap:9px" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #15140F">Jouer ce parcours <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#15140F" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+              <div style="text-align:center;font-weight:700;font-size:11.5px;color:#6f6852;margin-top:9px">Suivi auto via Strava · ton temps entre au classement</div>
+              </sc-if>
+              <sc-if value="{{ playing }}">
+              <div style="border:3px solid #15140F;border-radius:18px;background:#5E8C3E;color:#fff;padding:15px;box-shadow:5px 5px 0 #15140F;display:flex;align-items:center;gap:11px;animation:popin .3s ease">
+                <span style="width:34px;height:34px;border-radius:10px;border:2.5px solid #15140F;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5E8C3E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <div><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px;line-height:1">C'est parti !</div><div style="font-weight:700;font-size:11.5px;opacity:.92">Suivi Strava actif — va chercher ce chrono.</div></div>
+              </div>
+              </sc-if>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- ============ EXPLORER ============ -->
+          <sc-if value="{{ showExplorer }}">
+          <div style="padding:0 0 26px;animation:popin .25s ease">
+            <div style="padding:2px 18px 0">
+              <h2 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;margin:0 0 12px">Explorer</h2>
+              <div style="display:flex;align-items:center;gap:9px;padding:11px 13px;border:2.5px solid #15140F;border-radius:14px;background:#fff;box-shadow:3px 3px 0 #15140F;margin-bottom:13px">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6f6852" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input placeholder="Cherche un parcours, un créateur…" style="border:none;outline:none;background:none;font-family:inherit;font-weight:700;font-size:13px;width:100%;color:#15140F">
+              </div>
+              <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:20px">
+                <span style="flex-shrink:0;padding:7px 13px;border:2.5px solid #15140F;border-radius:999px;background:#FFCB1A;font-weight:800;font-size:12px;box-shadow:2.5px 2.5px 0 #15140F">Tendances</span>
+                <span style="flex-shrink:0;padding:7px 13px;border:2.5px solid #15140F;border-radius:999px;background:#fff;font-weight:800;font-size:12px">Nouveaux</span>
+                <span style="flex-shrink:0;padding:7px 13px;border:2.5px solid #15140F;border-radius:999px;background:#fff;font-weight:800;font-size:12px">Près de toi</span>
+                <span style="flex-shrink:0;padding:7px 13px;border:2.5px solid #15140F;border-radius:999px;background:#fff;font-weight:800;font-size:12px">Difficulté</span>
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:7px;padding:0 18px;margin-bottom:11px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#D4533A" stroke="#15140F" stroke-width="1.6"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1-2 0-4 2-6 .5 2.5 2 4 4 6 1.5 1.5 2 3 2 5a6 6 0 1 1-12 0c0-1 .3-2 1-3a2.5 2.5 0 0 0 1.5 3.5Z"/></svg>
+              <h3 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;margin:0">Tendances cette semaine</h3>
+            </div>
+            <div style="display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:4px 18px 18px">
+              <sc-for list="{{ hotRuns }}" as="run" hint-placeholder-count="3">
+                <div onClick="{{ run.onOpen }}" style="flex:0 0 214px;border:2.5px solid #15140F;border-radius:18px;overflow:hidden;background:#fff;box-shadow:4px 4px 0 #15140F;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:2px 2px 0 #15140F">
+                  <div style="height:108px;position:relative;border-bottom:2.5px solid #15140F;overflow:hidden">
+                    <div style="{{ run.thumbStyle }}"></div>
+                    <span style="position:absolute;top:9px;left:9px;padding:3px 9px;border:2px solid #15140F;border-radius:999px;background:#D4533A;color:#fff;font-weight:800;font-size:9px;letter-spacing:.04em;text-transform:uppercase">Tendance</span>
+                    <span style="position:absolute;bottom:9px;left:9px;{{ run.tierBadgeStyle }}">{{ run.t.label }}</span>
+                  </div>
+                  <div style="padding:11px 12px">
+                    <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ run.name }}</div>
+                    <div style="font-weight:700;font-size:11px;color:#8a8068;margin:2px 0 8px">{{ run.creator }}</div>
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <div style="display:flex;align-items:center;gap:4px"><span style="color:#F2A30F;font-size:13px">★</span><span style="font-weight:800;font-size:12.5px">{{ run.starsTxt }}</span></div>
+                      <span style="font-weight:700;font-size:11px;color:#6f6852">{{ run.playsTxt }}</span>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <h3 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;margin:0 0 11px;padding:0 18px">Tous les parcours</h3>
+            <div style="display:flex;flex-direction:column;gap:9px;padding:0 18px">
+              <sc-for list="{{ allRuns }}" as="run" hint-placeholder-count="6">
+                <div onClick="{{ run.onOpen }}" style="display:flex;align-items:center;gap:12px;padding:10px;border:2.5px solid #15140F;border-radius:15px;background:#fff;box-shadow:3px 3px 0 #15140F;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #15140F">
+                  <div style="{{ run.thumbBoxStyle }}"></div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ run.name }}</div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+                      <span style="{{ run.tierBadgeStyle }}">{{ run.t.label }}</span>
+                      <span style="font-weight:700;font-size:11px;color:#6f6852">{{ run.distTxt }}</span>
+                      <span style="display:flex;align-items:center;gap:3px"><span style="color:#F2A30F;font-size:12px">★</span><span style="font-weight:800;font-size:11.5px">{{ run.starsTxt }}</span></span>
+                    </div>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15140F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- ============ CRÉER ============ -->
+          <sc-if value="{{ showCreer }}">
+          <div style="padding:0 18px 26px;animation:popin .25s ease">
+            <sc-if value="{{ notPublished }}">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin:2px 0 4px">
+                <h2 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;margin:0">Créer un parcours</h2>
+                <span style="padding:4px 10px;border:2.5px solid #15140F;border-radius:999px;background:#7E9B5B;color:#fff;font-weight:800;font-size:10px;box-shadow:2px 2px 0 #15140F">Ambassadeur</span>
+              </div>
+              <p style="font-weight:600;font-size:13px;color:#6f6852;margin:0 0 18px">Conçois ton niveau et partage-le avec ton département.</p>
+
+              <label style="display:block;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#1F4BA0;margin-bottom:8px">1 · Le tracé</label>
+              <div style="border:2.5px solid #15140F;border-radius:16px;overflow:hidden;box-shadow:4px 4px 0 #15140F;margin-bottom:11px;position:relative;height:148px;background-image:url('assets/nature-cycling.png');background-size:cover;background-position:center">
+                <div style="position:absolute;inset:0;background:rgba(11,30,72,.45)"></div>
+                <svg width="100%" height="100%" viewBox="0 0 320 148" preserveAspectRatio="none" style="position:absolute;inset:0"><path d="M30 120 C 90 60, 140 130, 200 70 S 290 50, 300 30" fill="none" stroke="#FFCB1A" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"></path></svg>
+                <span style="position:absolute;top:11px;left:11px;padding:4px 10px;border:2px solid #15140F;border-radius:999px;background:#fff;font-weight:800;font-size:10px;box-shadow:2px 2px 0 #15140F">Aperçu du tracé</span>
+              </div>
+              <div style="display:flex;gap:9px;margin-bottom:20px">
+                <button style="flex:1;padding:12px;border:2.5px solid #15140F;border-radius:13px;background:#1F4BA0;color:#fff;font-family:inherit;font-weight:800;font-size:13px;cursor:pointer;box-shadow:3px 3px 0 #15140F" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #15140F">Importer un GPX</button>
+                <button style="flex:1;padding:12px;border:2.5px solid #15140F;border-radius:13px;background:#fff;font-family:inherit;font-weight:800;font-size:13px;cursor:pointer;box-shadow:3px 3px 0 #15140F" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #15140F">Dessiner</button>
+              </div>
+
+              <label style="display:block;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#1F4BA0;margin-bottom:8px">2 · Les infos</label>
+              <div style="border:2.5px solid #15140F;border-radius:13px;background:#fff;box-shadow:3px 3px 0 #15140F;padding:12px 13px;margin-bottom:9px"><input placeholder="Nom du parcours" style="border:none;outline:none;background:none;font-family:inherit;font-weight:800;font-size:15px;width:100%;color:#15140F"></div>
+              <div style="border:2.5px solid #15140F;border-radius:13px;background:#fff;box-shadow:3px 3px 0 #15140F;padding:12px 13px;margin-bottom:14px"><input placeholder="Département (ex : Isère · 38)" style="border:none;outline:none;background:none;font-family:inherit;font-weight:700;font-size:14px;width:100%;color:#15140F"></div>
+              <div style="font-weight:800;font-size:11px;color:#6f6852;margin-bottom:7px">Difficulté</div>
+              <div style="display:flex;gap:7px;margin-bottom:20px">
+                <sc-for list="{{ cTierChips }}" as="c" hint-placeholder-count="4">
+                  <button onClick="{{ c.onClick }}" style="{{ c.style }}"><div style="font-weight:800;font-size:13px;line-height:1">{{ c.label }}</div><div style="font-size:9.5px;font-weight:700;opacity:.8;margin-top:2px">{{ c.sub }}</div></button>
+                </sc-for>
+              </div>
+
+              <label style="display:block;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#1F4BA0;margin-bottom:8px">3 · Ta reco config</label>
+              <div style="display:flex;gap:8px;margin-bottom:11px">
+                <sc-for list="{{ cBikeChips }}" as="c" hint-placeholder-count="3">
+                  <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:9px;padding:12px 13px;border:2.5px solid #15140F;border-radius:13px;background:#1F4BA0;color:#fff;box-shadow:3px 3px 0 #15140F;margin-bottom:11px">
+                <span style="padding:3px 9px;border:2px solid #15140F;border-radius:999px;background:#FFCB1A;color:#15140F;font-weight:800;font-size:9px;text-transform:uppercase">Suggéré</span>
+                <span style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px">{{ cTireSuggest }}</span>
+              </div>
+              <div style="border:2.5px solid #15140F;border-radius:13px;background:#fff;box-shadow:3px 3px 0 #15140F;padding:12px 13px;margin-bottom:22px"><textarea placeholder="Ton conseil aux riders (ex : attaque le mur assis…)" rows="2" style="border:none;outline:none;background:none;font-family:inherit;font-weight:700;font-size:13px;width:100%;resize:none;color:#15140F"></textarea></div>
+
+              <button onClick="{{ publish }}" style="width:100%;padding:17px;border:3px solid #15140F;border-radius:18px;background:#FFCB1A;font-family:'Fredoka',sans-serif;font-weight:700;font-size:20px;cursor:pointer;box-shadow:5px 5px 0 #15140F" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #15140F">Publier le parcours</button>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ published }}">
+            <div style="padding:40px 6px;text-align:center;animation:popin .3s ease">
+              <div style="width:84px;height:84px;margin:0 auto 22px;border:3px solid #15140F;border-radius:24px;background:#5E8C3E;display:flex;align-items:center;justify-content:center;box-shadow:5px 5px 0 #15140F"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+              <h2 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:27px;margin:0 0 8px">Parcours publié !</h2>
+              <p style="font-weight:600;font-size:14px;color:#4a4538;margin:0 auto 24px;max-width:250px">Ton niveau est en ligne dans {{ dept }}. Les riders peuvent déjà tenter le chrono.</p>
+              <div style="display:flex;gap:9px;justify-content:center;margin-bottom:22px">
+                <div style="border:2.5px solid #15140F;border-radius:14px;padding:11px 16px;background:#FFCB1A;box-shadow:3px 3px 0 #15140F"><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;line-height:1">+500</div><div style="font-weight:800;font-size:10px">pts créateur</div></div>
+                <div style="border:2.5px solid #15140F;border-radius:14px;padding:11px 16px;background:#fff;box-shadow:3px 3px 0 #15140F"><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:22px;line-height:1">0</div><div style="font-weight:800;font-size:10px">runs · à toi</div></div>
+              </div>
+              <button onClick="{{ resetPublish }}" style="padding:13px 22px;border:2.5px solid #15140F;border-radius:15px;background:#fff;font-family:inherit;font-weight:800;font-size:14px;cursor:pointer;box-shadow:3px 3px 0 #15140F" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #15140F">Créer un autre parcours</button>
+            </div>
+            </sc-if>
+          </div>
+          </sc-if>
+
+          <!-- ============ CLASSEMENT ============ -->
+          <sc-if value="{{ showClassement }}">
+          <div style="padding:0 18px 26px;animation:popin .25s ease">
+            <h2 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;margin:2px 0 13px">Classement</h2>
+            <div style="display:flex;gap:8px;margin-bottom:9px">
+              <button onClick="{{ onMensuel }}" style="{{ scopeMensuelStyle }}">Mensuel · Dépt</button>
+              <button onClick="{{ onGlobal }}" style="{{ scopeGlobalStyle }}">Global · France</button>
+            </div>
+            <div style="font-weight:700;font-size:11.5px;color:#6f6852;margin-bottom:16px">Le classement par parcours est sur chaque parcours. {{ classSub }}.</div>
+
+            <div style="border:3px solid #15140F;border-radius:22px;background:#FFCB1A;padding:18px;box-shadow:6px 6px 0 #15140F;margin-bottom:20px;position:relative">
+              <span style="position:absolute;top:-13px;left:18px;padding:5px 13px;border:2.5px solid #15140F;border-radius:999px;background:#1F4BA0;color:#F3EAD3;font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase;box-shadow:2.5px 2.5px 0 #15140F">{{ classTitle }}</span>
+              <div style="display:flex;align-items:center;gap:14px;margin-top:6px">
+                <div style="width:58px;height:58px;border-radius:16px;border:3px solid #15140F;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:21px;box-shadow:3px 3px 0 #15140F;flex-shrink:0">{{ classKing.init }}</div>
+                <div style="flex:1;min-width:0"><div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:20px;line-height:1.05">{{ classKing.nm }}</div><div style="font-weight:800;font-size:13px;color:#6f6852">{{ classKing.ptsTxt }}</div></div>
+                <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:38px;line-height:1">1</div>
+              </div>
+            </div>
+
+            <div>
+              <sc-for list="{{ classRest }}" as="p" hint-placeholder-count="5">
+                <div style="{{ p.rowStyle }}">
+                  <span style="{{ p.rankStyle }}">{{ p.rank }}</span>
+                  <div style="{{ p.avStyle }}">{{ p.init }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px">{{ p.nm }}</div><div style="font-weight:700;font-size:11px;color:#8a8068">{{ p.ptsTxt }}</div></div>
+                  <sc-if value="{{ p.you }}"><span style="padding:3px 10px;border:2px solid #15140F;border-radius:999px;background:#15140F;color:#FFCB1A;font-weight:800;font-size:10px">TOI</span></sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- ============ PROFIL ============ -->
+          <sc-if value="{{ showProfil }}">
+          <div style="padding:0 18px 26px;animation:popin .25s ease">
+            <div style="display:flex;align-items:center;gap:14px;margin:6px 0 16px">
+              <div style="width:66px;height:66px;border-radius:20px;border:3px solid #15140F;box-shadow:4px 4px 0 #15140F;flex-shrink:0;background-image:url('assets/nature-cycling.png');background-size:cover;background-position:center"></div>
+              <div style="min-width:0">
+                <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:23px;line-height:1">{{ name }} M.</div>
+                <div style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:4px 11px;border:2.5px solid #15140F;border-radius:999px;background:#7E9B5B;color:#fff;font-weight:800;font-size:11px;box-shadow:2px 2px 0 #15140F">Ambassadeur MICHELIN · Rang Or</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:18px">
+              <sc-for list="{{ medals }}" as="m" hint-placeholder-count="3">
+                <div style="flex:1;border:2.5px solid #15140F;border-radius:15px;background:#fff;box-shadow:3px 3px 0 #15140F;padding:12px 6px;text-align:center">
+                  <div style="width:30px;height:30px;margin:0 auto 6px;border-radius:50%;border:2.5px solid #15140F;background:{{ m.c }}"></div>
+                  <div style="font-weight:800;font-size:11px">{{ m.n }}</div>
+                  <div style="font-weight:700;font-size:10px;color:#8a8068">{{ m.count }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="border:3px solid #15140F;border-radius:20px;background:#1F4BA0;color:#F3EAD3;padding:16px;box-shadow:5px 5px 0 #15140F;margin-bottom:18px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;opacity:.9">Cagnotte MICHELIN</span><span style="padding:3px 10px;border:2px solid #F3EAD3;border-radius:999px;font-weight:800;font-size:11px">-10 % débloqué</span></div>
+              <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:34px;line-height:1;margin-bottom:11px">3 450 <span style="font-size:17px">pts</span></div>
+              <div style="height:13px;border:2.5px solid #F3EAD3;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden;margin-bottom:7px"><div style="{{ ambStyle }};height:100%;background:#FFCB1A"></div></div>
+              <div style="font-weight:700;font-size:12px;opacity:.9">Plus que 1 550 pts → statut Légende MICHELIN</div>
+            </div>
+
+            <h3 style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;margin:0 0 11px">Mes parcours publiés</h3>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ myRuns }}" as="run" hint-placeholder-count="2">
+                <div onClick="{{ run.onOpen }}" style="display:flex;align-items:center;gap:12px;padding:11px;border:2.5px solid #15140F;border-radius:15px;background:#fff;box-shadow:3px 3px 0 #15140F;cursor:pointer" style-active="transform:translate(2px,2px);box-shadow:1px 1px 0 #15140F">
+                  <div style="{{ run.thumbBoxStyle }}"></div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ run.name }}</div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-top:3px">
+                      <span style="font-weight:700;font-size:11.5px;color:#6f6852">{{ run.playsTxt }}</span>
+                      <span style="display:flex;align-items:center;gap:3px"><span style="color:#F2A30F;font-size:12px">★</span><span style="font-weight:800;font-size:11.5px">{{ run.starsTxt }}</span></span>
+                      <span style="{{ run.tierBadgeStyle }}">{{ run.t.label }}</span>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+        </div>
+
+        <!-- ===== BOTTOM NAV (5 with center +) ===== -->
+        <div style="flex-shrink:0;display:flex;align-items:flex-end;padding:8px 12px 12px;border-top:2.5px solid #15140F;background:#fff">
+          <button onClick="{{ onAccueil }}" style="{{ navBtn.accueil }}">
+            <div style="{{ navIcon.accueil }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14"/><path d="M15 6v14"/></svg></div>
+            Carte
+          </button>
+          <button onClick="{{ onExplorer }}" style="{{ navBtn.explorer }}">
+            <div style="{{ navIcon.explorer }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="16 8 13.5 13.5 8 16 10.5 10.5"/></svg></div>
+            Explorer
+          </button>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+            <button onClick="{{ onCreer }}" style="{{ fabStyle }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button>
+            <span style="font-weight:800;font-size:10px;color:#6f6852">Créer</span>
+          </div>
+          <button onClick="{{ onClassement }}" style="{{ navBtn.classement }}">
+            <div style="{{ navIcon.classement }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.7V17c0 .6-.5 1-1 1.2C7.8 18.8 7 20.2 7 22"/><path d="M14 14.7V17c0 .6.5 1 1 1.2 1.2.6 2 2 2 3.8"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+            Classement
+          </button>
+          <button onClick="{{ onProfil }}" style="{{ navBtn.profil }}">
+            <div style="{{ navIcon.profil }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg></div>
+            Profil
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1160,&quot;height&quot;:920},&quot;riderName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Léa&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;homeDept&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Isère · 38&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { tab: "accueil", openRun: null, playing: false, boardScope: "mensuel", published: false, cTier: "bleu", cBike: "gravel" };
+
+  setTab = (t) => this.setState({ tab: t, openRun: null });
+  openRun = (id) => this.setState({ openRun: id, playing: false });
+  closeRun = () => this.setState({ openRun: null });
+  play = () => this.setState({ playing: true });
+  publish = () => this.setState({ published: true });
+
+  renderVals() {
+    const ink = "#15140F", yellow = "#FFCB1A", blue = "#1F4BA0", sage = "#7E9B5B", amber = "#F2A30F", red = "#D4533A";
+    const name = (this.props.riderName || "Léa").trim() || "Léa";
+    const dept = this.props.homeDept || "Isère · 38";
+    const S = this.state;
+    const PHOTO = "assets/nature-cycling.png";
+    const youInit = (name[0] || "L") + "M";
+
+    const tiers = { vert: { label: "Vert", sub: "Découverte", col: sage }, bleu: { label: "Bleu", sub: "Sport", col: blue }, rouge: { label: "Rouge", sub: "Engagé", col: red }, noir: { label: "Noir", sub: "Légende", col: ink } };
+    const bikeLabel = { route: "Route", gravel: "Gravel", vtt: "VTT" };
+    const tireFor = { route: "MICHELIN Power Road", gravel: "MICHELIN Power Gravel", vtt: "MICHELIN Wild Trail" };
+    const starCells = (v) => [0, 1, 2, 3, 4].map((i) => ({ style: { color: i < Math.round(v) ? amber : "#d8cfb8", fontSize: "13px", lineHeight: 1 } }));
+
+    const reviews = [
+      { name: "Inès B.", init: "IB", txt: "Tracé magnifique, chaque watt en vaut la peine.", starCells: starCells(5) },
+      { name: "Marco V.", init: "MV", txt: "Bien balisé. Prévois de l'eau, peu de ravito.", starCells: starCells(4) },
+    ];
+    const times = ["1:58:40", "2:01:12", "2:03:55", "2:07:30", "2:21:09"];
+    const medalCol = { 1: "#E8B43A", 2: "#B9BBC0", 3: "#C8895A" };
+    const bcol = [yellow, blue, sage];
+    const mkRunBoard = () => [
+      { rank: 1, nm: "Tomás R.", init: "TR" }, { rank: 2, nm: "Inès B.", init: "IB" }, { rank: 3, nm: "Karim D.", init: "KD" },
+      { rank: 4, nm: "Marco V.", init: "MV" }, { rank: 12, nm: name + " M.", init: youInit, you: true },
+    ].map((p, i) => ({
+      ...p, time: times[i],
+      rowStyle: { display: "flex", alignItems: "center", gap: "11px", padding: "10px 12px", borderRadius: "14px", border: "2.5px solid " + ink, background: p.you ? yellow : "#fff", boxShadow: p.you ? "3px 3px 0 " + ink : "none", marginBottom: "8px" },
+      rankStyle: { width: "22px", fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: "15px", textAlign: "center", flexShrink: 0, color: p.rank <= 3 ? ink : "#8a8068" },
+      avStyle: { width: "34px", height: "34px", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "12px", flexShrink: 0, border: "2.5px solid " + ink, background: medalCol[p.rank] || bcol[i % 3], color: p.rank <= 3 ? ink : (bcol[i % 3] === blue ? "#fff" : ink) },
+    }));
+
+    const RAW = [
+      { id: "cretes", name: "Crêtes du Vercors", creator: "@tomas_r", tier: "rouge", dist: 42, deniv: 780, time: "1:58:40", stars: 4.8, reviews: 128, plays: 2400, hot: true, bike: "gravel", note: "Attaque le mur du km 28 assis — tu garderas du jus pour la crête finale." },
+      { id: "lac", name: "Tour du Lac", creator: "@ines.b", tier: "vert", dist: 18, deniv: 120, time: "0:48:10", stars: 4.6, reviews: 96, plays: 3100, hot: true, bike: "route", note: "Plat et roulant, parfait pour s'échauffer ou rouler en famille." },
+      { id: "arzelier", name: "Col de l'Arzelier", creator: "@karim_d", tier: "noir", dist: 64, deniv: 1840, time: "3:12:05", stars: 4.9, reviews: 74, plays: 1200, hot: true, bike: "route", note: "15 km de montée sèche. Gère ton braquet, ne pars surtout pas trop fort." },
+      { id: "foret", name: "Singletrack Forêt", creator: "@sophie.l", tier: "bleu", dist: 24, deniv: 540, time: "1:22:30", stars: 4.4, reviews: 52, plays: 880, bike: "vtt", note: "Boue garantie après la pluie : des crampons s'imposent." },
+      { id: "plateau", name: "Plateau Gravel", creator: "@marco_v", tier: "rouge", dist: 51, deniv: 920, time: "2:30:00", stars: 4.5, reviews: 41, plays: 640, bike: "gravel", note: "Vent de face sur le plateau : reste en danseuse dans les bosses." },
+      { id: "nuit", name: "Ride Nocturne", creator: "@lea.m", tier: "bleu", dist: 30, deniv: 300, time: "1:10:00", stars: 4.7, reviews: 33, plays: 510, bike: "route", note: "Éclairage obligatoire. Le coucher de soleil sur la vallée est magique." },
+      { id: "mur", name: "Le Mur de Sassenage", creator: "@tomas_r", tier: "noir", dist: 12, deniv: 680, time: "0:42:00", stars: 5.0, reviews: 88, plays: 1500, bike: "route", note: "Court mais brutal : 18% de moyenne. Bonne chance." },
+      { id: "canal", name: "Voie du Canal", creator: "@lea.m", tier: "vert", dist: 22, deniv: 90, time: "0:55:00", stars: 4.5, reviews: 28, plays: 420, bike: "gravel", note: "Ombragé et roulant le long de l'eau. Idéal par forte chaleur." },
+    ];
+    const fmtPlays = (n) => (n >= 1000 ? (n / 1000).toFixed(1).replace(".0", "") + "k" : "" + n) + " runs";
+    const runs = RAW.map((r) => ({
+      ...r, t: tiers[r.tier],
+      starsTxt: r.stars.toFixed(1), starCells: starCells(r.stars), reviewsTxt: r.reviews + " avis",
+      distTxt: r.dist + " km", denivTxt: r.deniv + " m D+", playsTxt: fmtPlays(r.plays),
+      bikeTxt: bikeLabel[r.bike], tireTxt: tireFor[r.bike],
+      tierBadgeStyle: { display: "inline-flex", alignItems: "center", gap: "5px", padding: "3px 10px", border: "2px solid " + ink, borderRadius: "999px", background: tiers[r.tier].col, color: "#fff", fontWeight: 800, fontSize: "10.5px" },
+      thumbStyle: { position: "absolute", inset: 0, backgroundImage: "url('" + PHOTO + "')", backgroundSize: "cover", backgroundPosition: "center" },
+      thumbBoxStyle: { width: "54px", height: "54px", borderRadius: "12px", border: "2.5px solid " + ink, flexShrink: 0, backgroundImage: "url('" + PHOTO + "')", backgroundSize: "cover", backgroundPosition: "center" },
+      onOpen: () => this.openRun(r.id),
+      board: mkRunBoard(), reviews,
+    }));
+    const byId = (id) => runs.find((x) => x.id === id);
+
+    // map nodes
+    const order = ["lac", "foret", "cretes", "arzelier", "plateau", "nuit", "mur"];
+    const nodeState = { lac: { completed: 2 }, foret: { completed: 1 }, cretes: { completed: 3 }, arzelier: { current: true }, plateau: { locked: true }, nuit: { locked: true }, mur: { locked: true } };
+    const xs = [104, 250, 150, 268, 96, 205, 286], ystep = 132, y0 = 80;
+    const pts = order.map((id, i) => ({ x: xs[i], y: y0 + i * ystep }));
+    const mapH = y0 + (order.length - 1) * ystep + 96;
+    let pathD = "M " + pts[0].x + " " + pts[0].y;
+    for (let i = 1; i < pts.length; i++) { const a = pts[i - 1], b = pts[i], my = (a.y + b.y) / 2; pathD += " C " + a.x + " " + my + " " + b.x + " " + my + " " + b.x + " " + b.y; }
+    const nodes = order.map((id, i) => {
+      const r = byId(id), st = nodeState[id], p = pts[i];
+      const locked = !!st.locked, current = !!st.current, done = st.completed != null;
+      const col = locked ? "#cfc6ad" : r.t.col;
+      return {
+        id, name: r.name, num: i + 1, locked, current, completed: done, showNum: !locked,
+        stars: done ? "★".repeat(st.completed) : "",
+        onClick: locked ? (() => {}) : (() => this.openRun(id)),
+        wrapStyle: { position: "absolute", left: p.x + "px", top: p.y + "px", transform: "translate(-50%,-50%)", display: "flex", flexDirection: "column", alignItems: "center", width: "104px", zIndex: 2 },
+        starStyle: { color: amber, fontSize: "12px", letterSpacing: "1px", marginBottom: "3px", height: "14px", lineHeight: 1 },
+        circleStyle: { width: "62px", height: "62px", borderRadius: "50%", border: "3px solid " + ink, background: col, color: (r.tier === "vert" || locked) ? ink : "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: "23px", cursor: locked ? "default" : "pointer", boxShadow: "4px 4px 0 " + ink, animation: current ? "pulse 1.8s ease-in-out infinite" : "none", opacity: locked ? 0.72 : 1 },
+        nameStyle: { marginTop: "7px", padding: "2px 9px", background: "#fff", border: "2px solid " + ink, borderRadius: "999px", fontWeight: 800, fontSize: "10px", whiteSpace: "nowrap", boxShadow: "1.5px 1.5px 0 " + ink, maxWidth: "116px", overflow: "hidden", textOverflow: "ellipsis" },
+      };
+    });
+
+    const challenge = { name: "Crêtes du Vercors", reward: "+300 pts", onPlay: () => this.openRun("cretes") };
+
+    const hotRuns = runs.filter((r) => r.hot);
+    const allRuns = runs;
+
+    // classement
+    const monthlyBoard = [
+      { rank: 1, nm: "Tomás R.", pts: 9820, init: "TR" }, { rank: 2, nm: "Inès B.", pts: 8460, init: "IB" }, { rank: 3, nm: "Karim D.", pts: 7990, init: "KD" },
+      { rank: 4, nm: "Sophie L.", pts: 6210, init: "SL" }, { rank: 5, nm: "Marco V.", pts: 5340, init: "MV" }, { rank: 7, nm: name + " M.", pts: 3450, init: youInit, you: true },
+    ];
+    const globalBoard = [
+      { rank: 1, nm: "Julien P. · 73", pts: 48200, init: "JP" }, { rank: 2, nm: "Tomás R. · 38", pts: 41100, init: "TR" }, { rank: 3, nm: "Léna F. · 06", pts: 39550, init: "LF" },
+      { rank: 4, nm: "Hugo M. · 31", pts: 33800, init: "HM" }, { rank: 5, nm: "Inès B. · 38", pts: 30240, init: "IB" }, { rank: 218, nm: name + " M. · 38", pts: 3450, init: youInit, you: true },
+    ];
+    const mkRows = (arr) => arr.map((p, i) => ({
+      ...p, ptsTxt: p.pts.toLocaleString("fr-FR") + " pts",
+      rowStyle: { display: "flex", alignItems: "center", gap: "12px", padding: "11px 12px", borderRadius: "15px", border: "2.5px solid " + ink, background: p.you ? yellow : "#fff", boxShadow: p.you ? "3px 3px 0 " + ink : "none", marginBottom: "9px" },
+      rankStyle: { width: "34px", fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: "15px", textAlign: "center", flexShrink: 0, color: p.rank <= 3 ? ink : "#8a8068" },
+      avStyle: { width: "38px", height: "38px", borderRadius: "11px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "13px", flexShrink: 0, border: "2.5px solid " + ink, background: medalCol[p.rank] || bcol[i % 3], color: p.rank <= 3 ? ink : (bcol[i % 3] === blue ? "#fff" : ink) },
+    }));
+    const isMensuel = S.boardScope === "mensuel";
+    const boardRows = mkRows(isMensuel ? monthlyBoard : globalBoard);
+    const scopeBtn = (a) => ({ flex: 1, padding: "10px", borderRadius: "12px", border: "2.5px solid " + ink, cursor: "pointer", fontWeight: 800, fontSize: "12.5px", fontFamily: "inherit", background: a ? yellow : "#fff", boxShadow: a ? "3px 3px 0 " + ink : "none", transform: a ? "translate(-1px,-1px)" : "none" });
+
+    const myRuns = runs.filter((r) => r.creator === "@lea.m");
+    const medals = [{ n: "Or", c: "#E8B43A", count: "× 4" }, { n: "Argent", c: "#B9BBC0", count: "× 9" }, { n: "Bronze", c: "#C8895A", count: "× 12" }];
+
+    // creator
+    const cTierChips = Object.keys(tiers).map((k) => { const a = S.cTier === k; return { k, label: tiers[k].label, sub: tiers[k].sub, onClick: () => this.setState({ cTier: k }), style: { flex: "1 1 0", minWidth: 0, cursor: "pointer", textAlign: "center", padding: "9px 4px", borderRadius: "12px", border: "2.5px solid " + ink, background: a ? tiers[k].col : "#fff", color: a ? "#fff" : ink, boxShadow: a ? "3px 3px 0 " + ink : "none", transform: a ? "translate(-1px,-1px)" : "none", fontFamily: "inherit" } }; });
+    const cBikeChips = ["route", "gravel", "vtt"].map((k) => { const a = S.cBike === k; return { k, label: bikeLabel[k], onClick: () => this.setState({ cBike: k }), style: { flex: "1 1 0", minWidth: 0, cursor: "pointer", textAlign: "center", padding: "11px 6px", borderRadius: "13px", border: "2.5px solid " + ink, background: a ? yellow : "#fff", boxShadow: a ? "3px 3px 0 " + ink : "none", transform: a ? "translate(-1px,-1px)" : "none", fontFamily: "inherit", fontWeight: 800, fontSize: "14px" } }; });
+    const cTireSuggest = tireFor[S.cBike];
+
+    // nav
+    const onRun = S.openRun != null;
+    const tabs = ["accueil", "explorer", "classement", "profil"];
+    const navBtn = {}, navIcon = {};
+    tabs.forEach((t) => {
+      const a = S.tab === t && !onRun;
+      navBtn[t] = { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", cursor: "pointer", border: "none", background: "none", padding: "2px", color: a ? ink : "#a89e87", fontWeight: a ? 800 : 600, fontSize: "10px", fontFamily: "inherit" };
+      navIcon[t] = { width: "40px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "10px", border: a ? "2px solid " + ink : "2px solid transparent", background: a ? yellow : "transparent", boxShadow: a ? "2px 2px 0 " + ink : "none", transition: "all .14s" };
+    });
+    const creerActive = S.tab === "creer" && !onRun;
+    const fabStyle = { width: "56px", height: "56px", borderRadius: "50%", border: "3px solid " + ink, background: creerActive ? blue : yellow, color: creerActive ? "#fff" : ink, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "3px 3px 0 " + ink, marginTop: "-24px" };
+
+    const cur = onRun ? byId(S.openRun) : null;
+
+    return {
+      name, dept, navBtn, navIcon, fabStyle, creerActive,
+      onAccueil: () => this.setTab("accueil"), onExplorer: () => this.setTab("explorer"),
+      onClassement: () => this.setTab("classement"), onProfil: () => this.setTab("profil"), onCreer: () => this.setTab("creer"),
+      showAccueil: S.tab === "accueil" && !onRun, showExplorer: S.tab === "explorer" && !onRun,
+      showCreer: S.tab === "creer" && !onRun, showClassement: S.tab === "classement" && !onRun,
+      showProfil: S.tab === "profil" && !onRun, showRun: onRun,
+      nodes, pathD, mapH, mapHpx: mapH + "px", challenge,
+      hotRuns, allRuns,
+      run: cur, closeRun: this.closeRun, play: this.play, playing: S.playing, notPlaying: !S.playing,
+      boardRows, classKing: boardRows[0], classRest: boardRows.slice(1), isMensuel,
+      onMensuel: () => this.setState({ boardScope: "mensuel" }), onGlobal: () => this.setState({ boardScope: "global" }),
+      scopeMensuelStyle: scopeBtn(isMensuel), scopeGlobalStyle: scopeBtn(!isMensuel),
+      classTitle: isMensuel ? "King of Dept" : "King de France", classSub: isMensuel ? "Classement mensuel — juin" : "Classement global — toutes catégories",
+      myRuns, medals, ambStyle: { width: "69%" },
+      cTierChips, cBikeChips, cTireSuggest, published: S.published, notPublished: !S.published, publish: this.publish, resetPublish: () => this.setState({ published: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

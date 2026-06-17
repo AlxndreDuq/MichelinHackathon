@@ -1,0 +1,234 @@
+/* ── Header ─────────────────────────────────────────────── */
+.carte-header {
+  padding: 16px 18px 12px;
+  flex-shrink: 0;
+}
+
+.carte-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.carte-sub {
+  margin-top: 3px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--muted-2);
+  line-height: 1;
+}
+
+/* ── Map area ───────────────────────────────────────────── */
+.map-area {
+  position: relative;
+  width: 100%;
+  min-height: 960px;
+  overflow: visible;
+}
+
+/* ── Mountain scenery ───────────────────────────────────── */
+.mountain {
+  position: absolute;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.mountain-blue {
+  width: 170px;
+  height: 150px;
+  background: var(--blue);
+  opacity: .07;
+  top: 80px;
+  left: -30px;
+}
+
+.mountain-sage {
+  width: 230px;
+  height: 200px;
+  background: var(--sage);
+  opacity: .07;
+  top: 360px;
+  right: -50px;
+}
+
+.mountain-red {
+  width: 140px;
+  height: 120px;
+  background: var(--red);
+  opacity: .07;
+  top: 680px;
+  right: 20px;
+}
+
+/* ── SVG trail ──────────────────────────────────────────── */
+.trail-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* ── Side-quest card ────────────────────────────────────── */
+.sidequest-card {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 126px;
+  background: var(--yellow);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 10px 10px 8px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.sidequest-eyebrow {
+  display: block;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted-1);
+  margin-bottom: 3px;
+}
+
+.sidequest-name {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+.sidequest-pts {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 12px;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+
+.sidequest-cta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: .03em;
+}
+
+/* ── Node group wrapper ─────────────────────────────────── */
+.node-group {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  z-index: 4;
+}
+
+/* ── Stars row (above completed nodes) ──────────────────── */
+.node-stars {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  height: 16px;
+}
+
+/* ── Node button ────────────────────────────────────────── */
+.node-btn {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: transform .08s ease, box-shadow .08s ease;
+  flex-shrink: 0;
+
+  &:active:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+
+  /* Tier backgrounds */
+  &.tier-vert  { background: var(--tier-vert);  }
+  &.tier-bleu  { background: var(--tier-bleu);  }
+  &.tier-rouge { background: var(--tier-rouge); }
+  &.tier-noir  { background: var(--tier-noir);  color: var(--cream); }
+
+  /* Locked state */
+  &.node-locked {
+    background: var(--disabled);
+    opacity: .72;
+    cursor: not-allowed;
+    box-shadow: none;
+    color: var(--muted-1);
+  }
+
+  /* Current: pulse glow ring */
+  &.node-current {
+    animation: pulse-ring 1.8s ease-in-out infinite;
+  }
+}
+
+.node-num {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ── Node name label ────────────────────────────────────── */
+.node-label {
+  background: white;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 86px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── JOUER pill (current node) ──────────────────────────── */
+.node-play-pill {
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  padding: 4px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: .05em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .08s, box-shadow .08s;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+}

@@ -1,0 +1,325 @@
+/* ── Header ─────────────────────────────────────────────── */
+.explorer-header {
+  padding: 16px 18px 0;
+}
+
+.explorer-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ── Search ─────────────────────────────────────────────── */
+.search-wrap {
+  padding: 12px 18px 0;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-icon {
+  color: var(--muted-2);
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+
+  &::placeholder { color: var(--muted-3); }
+}
+
+/* ── Filter chips ───────────────────────────────────────── */
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 18px 4px;
+  flex-wrap: nowrap;
+}
+
+.filter-chip {
+  flex-shrink: 0;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--cream);
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+
+  &.active {
+    background: var(--yellow);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &:active:not(.active) {
+    opacity: .65;
+    transform: scale(.97);
+  }
+}
+
+/* ── Sections ───────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 18px 10px;
+}
+
+.section-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ── Trending horizontal scroll ─────────────────────────── */
+.trending-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 18px 12px;
+}
+
+/* ── Trend card ─────────────────────────────────────────── */
+.trend-card {
+  width: 214px;
+  flex-shrink: 0;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--cream);
+  transition: transform .08s ease, box-shadow .08s ease;
+
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+}
+
+.card-photo {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.tendance-flag {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  background: var(--red);
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border: 1.5px solid var(--ink);
+  border-left: none;
+  box-shadow: var(--shadow-xs);
+}
+
+.card-tier-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  border: 1.5px solid rgba(255,255,255,.55);
+  border-radius: var(--radius-pill);
+  padding: 2px 9px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.card-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.card-name {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-creator {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--muted-2);
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.card-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--star);
+}
+
+.card-plays {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--muted-2);
+}
+
+/* ── All routes vertical list ───────────────────────────── */
+.route-list {
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.route-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1.5px solid var(--cream-dim);
+  cursor: pointer;
+  background: none;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  width: 100%;
+  text-align: left;
+  transition: opacity .1s;
+
+  &:last-child { border-bottom: none; }
+  &:active { opacity: .65; }
+}
+
+.route-thumb {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.route-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.route-name {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.route-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.route-tier-badge {
+  border-radius: var(--radius-pill);
+  padding: 2px 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  flex-shrink: 0;
+}
+
+.route-dist {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--muted-2);
+  flex-shrink: 0;
+}
+
+.route-rating {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--star);
+  flex-shrink: 0;
+}
+
+.route-chevron {
+  color: var(--muted-3);
+  flex-shrink: 0;
+}

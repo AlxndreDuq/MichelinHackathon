@@ -1,0 +1,105 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+.bottom-nav {
+  height: 64px;
+  background: var(--cream);
+  border-top: 2.5px solid var(--ink);
+  display: flex;
+  align-items: stretch;
+  overflow: visible;
+}
+
+/* ── Regular tab item ─────────────────────────────────── */
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 7px;
+  gap: 3px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active .nav-icon-box:not(.active) { opacity: .6; }
+  &:active .nav-label:not(.active)     { opacity: .6; }
+}
+
+.nav-icon-box {
+  width: 40px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--muted-2);
+  transition: all .14s;
+
+  &.active {
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
+    color: var(--ink);
+  }
+}
+
+.nav-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted-2);
+  line-height: 1;
+  letter-spacing: .01em;
+
+  &.active { color: var(--ink); }
+}
+
+/* ── Center FAB slot ──────────────────────────────────── */
+.nav-fab-slot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 7px;
+  position: relative;
+  overflow: visible;
+}
+
+.nav-fab {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink);
+  transition: transform .08s ease, box-shadow .08s ease, background .1s;
+  -webkit-tap-highlight-color: transparent;
+
+  &.active {
+    background: var(--blue);
+    color: var(--cream);
+  }
+
+  &:active {
+    transform: translateX(-50%) translate(3px, 3px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+}

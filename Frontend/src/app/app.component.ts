@@ -1,24 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ApiService } from './services/api.service';
+import { Component } from '@angular/core';
+import { PhoneFrameComponent } from './components/phone-frame/phone-frame.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [PhoneFrameComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
-  title = 'Frontend';
-
-  constructor(private apiService: ApiService) { }
-
-  ngOnInit(): void {
-    this.apiService.getRoot().subscribe({
-      next: (data) => {
-        console.log(data);
-      }
-    });
-  }
-
-}
+export class AppComponent {}

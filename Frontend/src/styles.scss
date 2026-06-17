@@ -1,11 +1,165 @@
-/* You can add global styles to this file, and also import other style files */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+/* ─── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; }
+body { font-family: 'Nunito', sans-serif; -webkit-font-smoothing: antialiased; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; -webkit-tap-highlight-color: transparent; user-select: none; }
+input, textarea { font-family: inherit; }
+
+/* hide scrollbars globally (mobile-app feel) */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+/* ─── Design Tokens ──────────────────────────────────────── */
+:root {
+  /* Colors */
+  --ink:       #15140F;
+  --yellow:    #FFCB1A;
+  --blue:      #1F4BA0;
+  --navy-bg:   #0B1E48;
+  --sage:      #7E9B5B;
+  --red:       #D4533A;
+  --cream:     #F3EAD3;
+  --cream-alt: #EFE9D8;
+  --cream-dim: #E9E2CF;
+  --success:   #5E8C3E;
+  --star:      #F2A30F;
+  --gold:      #E8B43A;
+  --silver:    #B9BBC0;
+  --bronze:    #C8895A;
+  --muted-1:   #6f6852;
+  --muted-2:   #8a8068;
+  --muted-3:   #a89e87;
+  --disabled:  #cfc6ad;
+  --disabled2: #d8cfb8;
+
+  /* Difficulty tiers */
+  --tier-vert:  #7E9B5B;
+  --tier-bleu:  #1F4BA0;
+  --tier-rouge: #D4533A;
+  --tier-noir:  #15140F;
+
+  /* Shadows (hard, no blur) */
+  --shadow-xs:  1.5px 1.5px 0 var(--ink);
+  --shadow-sm:  2px 2px 0 var(--ink);
+  --shadow-md:  3px 3px 0 var(--ink);
+  --shadow-lg:  4px 4px 0 var(--ink);
+  --shadow-xl:  5px 5px 0 var(--ink);
+  --shadow-2xl: 6px 6px 0 var(--ink);
+
+  /* Borders */
+  --border:     2.5px solid var(--ink);
+  --border-sm:  2px solid var(--ink);
+  --border-lg:  3px solid var(--ink);
+
+  /* Radii */
+  --radius-pill: 999px;
+  --radius-sm:   9px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-card: 15px;
 }
 
-* {
-  box-sizing: border-box;
+/* ─── Keyframes ──────────────────────────────────────────── */
+@keyframes popin {
+  from { opacity: 0; transform: scale(.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255,203,26,.45), 3px 3px 0 var(--ink); }
+  50%       { box-shadow: 0 0 0 9px rgba(255,203,26,.15), 3px 3px 0 var(--ink); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Utility: popin animation ───────────────────────────── */
+.popin { animation: popin .25s ease both; }
+
+/* ─── Utility: tier color modifiers ─────────────────────── */
+.tier-vert  { --tier-color: var(--tier-vert);  }
+.tier-bleu  { --tier-color: var(--tier-bleu);  }
+.tier-rouge { --tier-color: var(--tier-rouge); }
+.tier-noir  { --tier-color: var(--tier-noir);  }
+
+/* ─── Utility: pressed / active tactile feedback ─────────── */
+.pressable {
+  transition: transform .08s ease, box-shadow .08s ease;
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--ink) !important;
+  }
+}
+
+/* ─── Common card base ───────────────────────────────────── */
+.card {
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+  background: var(--cream);
+  padding: 14px;
+}
+
+/* ─── Pill / badge base ──────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-pill);
+  border: var(--border-sm);
+  padding: 3px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ─── Primary CTA button ─────────────────────────────────── */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--yellow);
+  color: var(--ink);
+  border: var(--border-lg);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  padding: 14px 24px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease;
+  &:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--cream);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  padding: 11px 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease;
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--ink);
+  }
 }

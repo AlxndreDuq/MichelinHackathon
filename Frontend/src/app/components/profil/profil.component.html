@@ -1,0 +1,71 @@
+<div class="profil">
+
+  <!-- ── Profile header ─────────────────────────────────── -->
+  <div class="profil-header">
+    <div class="avatar">
+      <img src="/nature-cycling.png" alt="Avatar Léa">
+    </div>
+    <div class="rider-info">
+      <h2 class="rider-name">{{ rider.name }}</h2>
+      <div class="ambassador-badge">
+        <span>●</span> Ambassadeur MICHELIN · Rang Or
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Medals ──────────────────────────────────────────── -->
+  <div class="medals-row">
+    @for (medal of medals; track medal.label) {
+      <div class="medal-tile">
+        <div class="medal-disc" [style.background]="medal.color"></div>
+        <span class="medal-label">{{ medal.label }}</span>
+        <span class="medal-count">×{{ medal.count }}</span>
+      </div>
+    }
+  </div>
+
+  <!-- ── Cagnotte MICHELIN ──────────────────────────────── -->
+  <div class="cagnotte-card">
+    <span class="cagnotte-pill">-10 % débloqué</span>
+    <p class="cagnotte-pts">{{ formatPts(rider.points) }}</p>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progressPct"></div>
+    </div>
+    <p class="cagnotte-sub">Plus que {{ formatPts(remaining) }} → statut Légende MICHELIN</p>
+  </div>
+
+  <!-- ── Mes parcours publiés ───────────────────────────── -->
+  <div class="section">
+    <h3 class="section-title">Mes parcours publiés</h3>
+
+    <div class="route-list">
+      @for (route of publishedRoutes; track route.id) {
+        <button class="route-row pressable" (click)="open(route.id)">
+
+          <!-- Thumb -->
+          <div class="route-thumb">
+            <img src="/nature-cycling.png" [alt]="route.name">
+            <div class="thumb-tier" [style.background]="tierColor(route.tier)">{{ tierText(route.tier) }}</div>
+          </div>
+
+          <!-- Info -->
+          <div class="route-info">
+            <p class="route-name">{{ route.name }}</p>
+            <div class="route-meta">
+              <span class="route-plays">{{ data.formatPlays(route.plays) }} runs</span>
+              <span class="route-sep">·</span>
+              <span class="route-stars">★ {{ route.stars }}</span>
+            </div>
+          </div>
+
+          <!-- Chevron -->
+          <svg class="row-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none">
+            <path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </button>
+      }
+    </div>
+  </div>
+
+</div>

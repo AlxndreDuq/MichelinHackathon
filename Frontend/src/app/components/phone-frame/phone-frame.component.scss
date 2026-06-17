@@ -1,0 +1,149 @@
+/* ── Outer bezel ────────────────────────────────────────── */
+.phone-frame {
+  width: 392px;
+  height: 812px;
+  flex-shrink: 0;
+  background: var(--blue);
+  border: 3px solid var(--ink);
+  border-radius: 48px;
+  box-shadow: 10px 10px 0 var(--ink);
+  padding: 11px;
+  overflow: hidden; /* clips everything at the bezel edge */
+}
+
+/* ── Inner screen ───────────────────────────────────────── */
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--cream);
+  border-radius: 38px;
+  display: flex;
+  flex-direction: column;
+  /* overflow: visible — lets the FAB float above the nav bar;
+     phone-frame's overflow:hidden handles the outer clipping */
+  overflow: visible;
+}
+
+/* ── Status bar ─────────────────────────────────────────── */
+.status-bar {
+  flex-shrink: 0;
+  height: 38px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 38px 38px 0 0;
+  background: var(--cream);
+
+  .status-time {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .notch {
+    width: 88px;
+    height: 20px;
+    background: var(--ink);
+    border-radius: 999px;
+  }
+
+  .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--ink);
+  }
+}
+
+/* ── Masthead ───────────────────────────────────────────── */
+.masthead {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 18px 10px;
+  background: var(--cream);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
+  .masthead-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .masthead-title {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--blue);
+    line-height: 1;
+  }
+
+  .masthead-sub {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--muted-2);
+    line-height: 1;
+  }
+
+  border-bottom: 1.5px solid var(--cream-dim);
+
+  .masthead-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-xs);
+    padding: 3px 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    color: var(--ink);
+    letter-spacing: .02em;
+
+    .badge-dot {
+      font-size: 8px;
+      color: var(--success);
+    }
+  }
+}
+
+/* ── Scrollable content area ─────────────────────────────── */
+.screen-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* ── Tab view wrapper — animates in on switch ────────────── */
+.tab-view {
+  animation: popin .25s ease both;
+  min-height: 100%;
+}
+
+/* ── Placeholder (Steps 3-8 will replace these) ──────────── */
+.placeholder-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 24px 18px;
+  gap: 8px;
+}
+
+.placeholder-label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--muted-2);
+  text-align: center;
+}

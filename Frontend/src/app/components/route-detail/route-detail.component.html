@@ -1,0 +1,145 @@
+@if (route(); as r) {
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<div class="hero">
+  <img class="hero-img" src="/nature-cycling.png" [alt]="r.name">
+  <div class="hero-gradient"></div>
+
+  <!-- Back button -->
+  <button class="back-btn pressable" (click)="state.closeRoute()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
+
+  <!-- Hero content -->
+  <div class="hero-content">
+    <span class="hero-tier-badge"
+      [class.tier-vert]="r.tier === 'vert'"
+      [class.tier-bleu]="r.tier === 'bleu'"
+      [class.tier-rouge]="r.tier === 'rouge'"
+      [class.tier-noir]="r.tier === 'noir'">
+      {{ data.tierLabel(r.tier) }}
+    </span>
+    <h1 class="hero-name">{{ r.name }}</h1>
+    <p class="hero-creator">Créé par {{ r.creator }} · Ambassadeur</p>
+  </div>
+</div>
+
+<!-- ── Body ──────────────────────────────────────────────── -->
+<div class="body">
+
+  <!-- Rating row -->
+  <div class="rating-row">
+    <div class="star-row">
+      @for (filled of starsRow(r.stars); track $index) {
+        <svg width="15" height="15" viewBox="0 0 24 24">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+            [attr.fill]="filled ? '#F2A30F' : '#d8cfb8'"
+            stroke="#15140F" stroke-width="1" stroke-linejoin="round"/>
+        </svg>
+      }
+    </div>
+    <span class="rating-num">{{ r.stars }}</span>
+    <span class="rating-count">({{ r.reviewCount }} avis)</span>
+    <span class="plays-badge">{{ data.formatPlays(r.plays) }} runs</span>
+  </div>
+
+  <!-- Stat trio -->
+  <div class="stat-trio">
+    <div class="stat-card">
+      <span class="stat-label">Distance</span>
+      <span class="stat-value">{{ r.dist }} km</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Dénivelé</span>
+      <span class="stat-value">{{ r.deniv }} m D+</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Record</span>
+      <span class="stat-value">{{ r.time }}</span>
+    </div>
+  </div>
+
+  <!-- Reco du créateur -->
+  <div class="creator-reco">
+    <div class="reco-header">
+      <span class="reco-badge">Reco du créateur</span>
+    </div>
+    <div class="reco-chips">
+      <span class="reco-chip reco-chip-cream">Vélo : {{ data.getBikeLabel(r.bike) }}</span>
+      <span class="reco-chip reco-chip-yellow">{{ data.getTire(r.bike) }}</span>
+    </div>
+    <p class="reco-note">"{{ r.note }}"</p>
+  </div>
+
+  <!-- Classement du parcours -->
+  <div class="section">
+    <h3 class="section-title">Classement du parcours</h3>
+    <div class="leaderboard">
+      @for (entry of leaderboard(); track entry.rank) {
+        <div class="lb-row" [class.lb-you]="entry.you">
+          <span class="lb-rank">{{ entry.rank }}</span>
+          <div class="lb-avatar"
+            [class.av-gold]="entry.rank === 1"
+            [class.av-silver]="entry.rank === 2"
+            [class.av-bronze]="entry.rank === 3"
+            [class.av-default]="entry.rank > 3">{{ entry.initials }}</div>
+          <span class="lb-name">{{ entry.name }}</span>
+          <span class="lb-time">{{ entry.time }}</span>
+          @if (entry.you) { <span class="lb-you-tag">TOI</span> }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Avis des riders -->
+  <div class="section">
+    <h3 class="section-title">Avis des riders</h3>
+    <div class="reviews">
+      @for (rev of reviews; track rev.name) {
+        <div class="review-card">
+          <div class="review-head">
+            <div class="review-avatar">{{ rev.initials }}</div>
+            <div class="review-meta">
+              <p class="review-name">{{ rev.name }}</p>
+              <div class="review-stars">
+                @for (filled of starsRow(rev.stars); track $index) {
+                  <svg width="12" height="12" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                      [attr.fill]="filled ? '#F2A30F' : '#d8cfb8'"
+                      stroke="#15140F" stroke-width="1" stroke-linejoin="round"/>
+                  </svg>
+                }
+              </div>
+            </div>
+          </div>
+          <p class="review-comment">{{ rev.comment }}</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    @if (!state.playing()) {
+      <button class="cta-btn pressable" (click)="state.play()">
+        Jouer ce parcours →
+      </button>
+      <p class="cta-caption">Suivi auto via Strava — ton temps sera enregistré automatiquement.</p>
+    } @else {
+      <div class="cta-confirm popin">
+        <div class="confirm-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <p class="confirm-title">C'est parti !</p>
+        <p class="confirm-sub">Suivi Strava actif · Bonne route, Léa !</p>
+      </div>
+    }
+  </div>
+
+</div>
+
+}

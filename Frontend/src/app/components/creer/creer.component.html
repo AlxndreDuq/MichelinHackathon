@@ -1,0 +1,161 @@
+<!-- ══ FORM VIEW ══════════════════════════════════════════ -->
+@if (!state.published()) {
+
+<div class="creer popin">
+
+  <div class="creer-header">
+    <h2 class="creer-title">Créer un parcours</h2>
+  </div>
+
+  <!-- ── Section 1 : Le tracé ──────────────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">1</div>
+      <h3 class="section-label">Le tracé</h3>
+    </div>
+
+    <!-- Preview card -->
+    <div class="trace-card">
+      <div class="trace-photo">
+        <img src="/nature-cycling.png" alt="Aperçu du tracé">
+        <!-- Dashed yellow route SVG overlay -->
+        <svg class="trace-svg" viewBox="0 0 300 130" preserveAspectRatio="none" fill="none">
+          <path d="M 15,110 C 55,95 75,58 115,72 C 155,86 185,38 225,28 C 256,20 275,36 287,24"
+            stroke="#FFCB1A" stroke-width="3.5"
+            stroke-dasharray="8 5" stroke-linecap="round" opacity=".92"/>
+        </svg>
+        <span class="trace-badge">Aperçu du tracé</span>
+      </div>
+    </div>
+
+    <!-- Import / Draw buttons -->
+    <div class="trace-btns">
+      <button class="btn-gpx pressable">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        Importer un GPX
+      </button>
+      <button class="btn-draw pressable">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        Dessiner
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Section 2 : Les infos ─────────────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">2</div>
+      <h3 class="section-label">Les infos</h3>
+    </div>
+
+    <input class="form-input"
+      type="text"
+      placeholder="Nom du parcours"
+      [value]="routeName"
+      (input)="routeName = $any($event.target).value">
+
+    <input class="form-input"
+      type="text"
+      placeholder="Département (ex : Isère · 38)"
+      [value]="dept"
+      (input)="dept = $any($event.target).value">
+
+    <!-- Difficulty tier chips -->
+    <div class="field-label">Difficulté</div>
+    <div class="tier-chips">
+      @for (tier of tiers; track tier.key) {
+        <button class="tier-chip"
+          [class.active]="state.cTier() === tier.key"
+          [style.background]="state.cTier() === tier.key ? tier.color : ''"
+          [style.color]="state.cTier() === tier.key ? 'white' : ''"
+          (click)="setTier(tier.key)">
+          {{ tier.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- ── Section 3 : Ta reco config ────────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-num">3</div>
+      <h3 class="section-label">Ta reco config</h3>
+    </div>
+
+    <!-- Bike type chips -->
+    <div class="bike-chips">
+      @for (bike of bikes; track bike.key) {
+        <button class="bike-chip"
+          [class.active]="state.cBike() === bike.key"
+          (click)="setBike(bike.key)">
+          {{ bike.label }}
+        </button>
+      }
+    </div>
+
+    <!-- Auto-mapped tire suggestion (reactive) -->
+    <div class="suggested-card">
+      <span class="suggested-badge">Suggéré</span>
+      <p class="suggested-tire">{{ data.getTire(state.cBike()) }}</p>
+      <p class="suggested-sub">Recommandé pour {{ data.getBikeLabel(state.cBike()) }}</p>
+    </div>
+
+    <!-- Creator note -->
+    <textarea class="form-textarea"
+      placeholder="Ton conseil aux riders…"
+      rows="3"
+      [value]="advice"
+      (input)="advice = $any($event.target).value"></textarea>
+  </div>
+
+  <!-- ── Publish CTA ────────────────────────────────────── -->
+  <button class="publish-btn pressable" (click)="publish()">
+    Publier le parcours
+  </button>
+
+</div>
+
+<!-- ══ SUCCESS STATE ══════════════════════════════════════ -->
+} @else {
+
+<div class="success-view popin">
+
+  <!-- Check icon -->
+  <div class="success-icon">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <h2 class="success-title">Parcours publié !</h2>
+  <p class="success-sub">
+    Ton parcours est en ligne dans <strong>{{ dept || 'Isère · 38' }}</strong>.<br>
+    Les riders peuvent maintenant le découvrir !
+  </p>
+
+  <!-- Stats -->
+  <div class="success-stats">
+    <div class="stat-tile">
+      <span class="stat-tile-value green">+500 pts</span>
+      <span class="stat-tile-label">créateur</span>
+    </div>
+    <div class="stat-tile">
+      <span class="stat-tile-value">0</span>
+      <span class="stat-tile-label">runs</span>
+    </div>
+  </div>
+
+  <button class="btn-secondary pressable" (click)="reset()">
+    Créer un autre parcours
+  </button>
+
+</div>
+
+}

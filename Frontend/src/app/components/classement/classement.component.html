@@ -1,0 +1,103 @@
+<div class="classement">
+
+  <!-- Title -->
+  <h2 class="classement-title">Classement</h2>
+
+  <!-- Scope toggles -->
+  <div class="scope-toggles">
+    <button class="scope-btn"
+      [class.active]="state.boardScope() === 'mensuel'"
+      (click)="setScope('mensuel')">
+      Mensuel · Dépt
+    </button>
+    <button class="scope-btn"
+      [class.active]="state.boardScope() === 'global'"
+      (click)="setScope('global')">
+      Global · France
+    </button>
+  </div>
+
+  <!-- Caption -->
+  <p class="scope-caption">{{ caption() }}</p>
+
+  <!-- King card -->
+  @if (king(); as k) {
+  <div class="king-wrap">
+
+    <!-- Floating badge -->
+    <div class="king-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      {{ kingTitle() }}
+    </div>
+
+    <div class="king-card">
+      <!-- Avatar (gold for rank 1) -->
+      <div class="king-avatar">{{ k.initials }}</div>
+
+      <!-- Name + points -->
+      <div class="king-info">
+        <p class="king-name">{{ k.name }}</p>
+        @if (state.boardScope() === 'global' && k.dept) {
+          <p class="king-dept">{{ k.dept }}</p>
+        }
+        <p class="king-points">{{ formatPts(k.points) }}</p>
+      </div>
+
+      <!-- Giant rank number -->
+      <span class="king-num">1</span>
+    </div>
+
+  </div>
+  }
+
+  <!-- Ranked rows -->
+  <div class="leaderboard">
+
+    @for (player of regularRows(); track player.rank) {
+      <div class="lb-row">
+        <span class="lb-rank">{{ player.rank }}</span>
+        <div class="lb-avatar"
+          [class.av-gold]="player.rank === 1"
+          [class.av-silver]="player.rank === 2"
+          [class.av-bronze]="player.rank === 3"
+          [class.av-default]="player.rank > 3">
+          {{ player.initials }}
+        </div>
+        <div class="lb-name-wrap">
+          <span class="lb-name">{{ player.name }}</span>
+          @if (state.boardScope() === 'global' && player.dept) {
+            <span class="lb-dept">{{ player.dept }}</span>
+          }
+        </div>
+        <span class="lb-points">{{ formatPts(player.points) }}</span>
+      </div>
+    }
+
+    <!-- Gap indicator when you are far from top 5 -->
+    @if (showGap()) {
+      <div class="gap-row">
+        <span class="gap-dots">· · ·</span>
+      </div>
+    }
+
+    <!-- You row -->
+    @if (youRow(); as you) {
+      <div class="lb-row lb-you">
+        <span class="lb-rank">{{ you.rank }}</span>
+        <div class="lb-avatar av-default">{{ you.initials }}</div>
+        <div class="lb-name-wrap">
+          <span class="lb-name">{{ you.name }}</span>
+          @if (state.boardScope() === 'global' && you.dept) {
+            <span class="lb-dept">{{ you.dept }}</span>
+          }
+        </div>
+        <span class="lb-points">{{ formatPts(you.points) }}</span>
+        <span class="you-tag">TOI</span>
+      </div>
+    }
+
+  </div>
+
+</div>

@@ -1,0 +1,91 @@
+<!-- Header -->
+<div class="carte-header">
+  <h2 class="carte-title">Carte des parcours</h2>
+  <p class="carte-sub">Isère · choisis ton prochain défi</p>
+</div>
+
+<!-- Map area -->
+<div class="map-area">
+
+  <!-- Scenery: faint mountain triangles -->
+  <div class="mountain mountain-blue"></div>
+  <div class="mountain mountain-sage"></div>
+  <div class="mountain mountain-red"></div>
+
+  <!-- Dashed trail SVG -->
+  <svg class="trail-svg" width="364" height="960" viewBox="0 0 364 960" fill="none">
+    <path [attr.d]="trailPath"
+      stroke="#15140F" stroke-width="5"
+      stroke-dasharray="1 15" stroke-linecap="round"
+      opacity="0.55"/>
+  </svg>
+
+  <!-- Side-quest card (Défi de la semaine) -->
+  <div class="sidequest-card pressable" (click)="state.openRoute('cretes')">
+    <span class="sidequest-eyebrow">Défi de la semaine</span>
+    <p class="sidequest-name">Crêtes du Vercors</p>
+    <p class="sidequest-pts">+300 pts</p>
+    <div class="sidequest-cta">Jouer ▸</div>
+  </div>
+
+  <!-- Nodes -->
+  @for (node of nodes; track node.id; let i = $index) {
+
+    <div class="node-group"
+      [style.left.px]="node.cx"
+      [style.top.px]="groupTop(node)"
+      style="transform: translateX(-50%)">
+
+      <!-- Stars above (completed only) -->
+      @if (node.state === 'completed') {
+        <div class="node-stars">
+          @for (s of filledStars(node.stars); track s) {
+            <svg width="13" height="13" viewBox="0 0 24 24">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                fill="#F2A30F" stroke="#15140F" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          }
+          @for (s of emptyStars(node.stars); track s) {
+            <svg width="13" height="13" viewBox="0 0 24 24">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                fill="#d8cfb8" stroke="#15140F" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          }
+        </div>
+      }
+
+      <!-- Node circle -->
+      <button class="node-btn"
+        [class.tier-vert]="node.tier === 'vert'"
+        [class.tier-bleu]="node.tier === 'bleu'"
+        [class.tier-rouge]="node.tier === 'rouge'"
+        [class.tier-noir]="node.tier === 'noir'"
+        [class.node-completed]="node.state === 'completed'"
+        [class.node-current]="node.state === 'current'"
+        [class.node-locked]="node.state === 'locked'"
+        [disabled]="node.state === 'locked'"
+        (click)="tapNode(node)">
+
+        @if (node.state === 'locked') {
+          <!-- Padlock icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        } @else {
+          <span class="node-num">{{ i + 1 }}</span>
+        }
+      </button>
+
+      <!-- Name label pill -->
+      <div class="node-label">{{ node.name }}</div>
+
+      <!-- JOUER pill (current node only) -->
+      @if (node.state === 'current') {
+        <button class="node-play-pill pressable" (click)="tapNode(node)">JOUER ▸</button>
+      }
+
+    </div>
+  }
+
+</div>

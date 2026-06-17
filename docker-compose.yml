@@ -10,6 +10,12 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/appdb
+    command: sh -c "npm install --prefer-offline && npm run dev"
+    depends_on:
+      db:
+        condition: service_healthy
 
   frontend:
     build:
@@ -35,6 +41,12 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   pgdata:

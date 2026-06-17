@@ -1,0 +1,109 @@
+<!-- Header -->
+<div class="explorer-header">
+  <h2 class="explorer-title">Explorer</h2>
+</div>
+
+<!-- Search field -->
+<div class="search-wrap">
+  <div class="search-field">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" type="text" placeholder="Cherche un parcours, un créateur…" readonly>
+  </div>
+</div>
+
+<!-- Filter chips -->
+<div class="filter-chips">
+  @for (f of filters; track f.key) {
+    <button class="filter-chip"
+      [class.active]="activeFilter() === f.key"
+      (click)="activeFilter.set(f.key)">
+      {{ f.label }}
+    </button>
+  }
+</div>
+
+<!-- Tendances section -->
+<div class="section">
+  <div class="section-header">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D4533A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+    </svg>
+    <h3 class="section-title">Tendances cette semaine</h3>
+  </div>
+
+  <!-- Horizontal scroller -->
+  <div class="trending-scroll">
+    @for (route of trendingRoutes; track route.id) {
+      <div class="trend-card pressable" (click)="open(route.id)">
+
+        <!-- Photo -->
+        <div class="card-photo">
+          <img src="/nature-cycling.png" [alt]="route.name">
+          <!-- Tendance ribbon -->
+          <span class="tendance-flag">Tendance</span>
+          <!-- Tier badge -->
+          <span class="card-tier-badge" [style.background]="tierColor(route.tier)">
+            {{ tierText(route.tier) }}
+          </span>
+        </div>
+
+        <!-- Card body -->
+        <div class="card-body">
+          <p class="card-name">{{ route.name }}</p>
+          <p class="card-creator">{{ route.creator }}</p>
+          <div class="card-footer">
+            <span class="card-rating">
+              <svg width="12" height="12" viewBox="0 0 24 24">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  fill="#F2A30F" stroke="#15140F" stroke-width="1" stroke-linejoin="round"/>
+              </svg>
+              {{ route.stars }}
+            </span>
+            <span class="card-plays">{{ data.formatPlays(route.plays) }} runs</span>
+          </div>
+        </div>
+
+      </div>
+    }
+  </div>
+</div>
+
+<!-- All routes section -->
+<div class="section">
+  <div class="section-header">
+    <h3 class="section-title">Tous les parcours</h3>
+  </div>
+
+  <div class="route-list">
+    @for (route of allRoutes; track route.id) {
+      <button class="route-row" (click)="open(route.id)">
+
+        <!-- Thumbnail -->
+        <div class="route-thumb">
+          <img src="/nature-cycling.png" [alt]="route.name">
+        </div>
+
+        <!-- Info -->
+        <div class="route-info">
+          <p class="route-name">{{ route.name }}</p>
+          <div class="route-meta">
+            <span class="route-tier-badge" [style.background]="tierColor(route.tier)">
+              {{ tierText(route.tier) }}
+            </span>
+            <span class="route-dist">{{ route.dist }} km</span>
+            <span class="route-rating">★ {{ route.stars }}</span>
+          </div>
+        </div>
+
+        <!-- Chevron -->
+        <svg class="route-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+
+      </button>
+    }
+  </div>
+</div>
