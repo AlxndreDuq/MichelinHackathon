@@ -2,7 +2,7 @@ import { pool } from './db/client.js';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
-function addMin(base: string, add: number): string {
+export function addMin(base: string, add: number): string {
   const [h, m] = base.split('h').map(Number);
   const total  = (h ?? 0) * 60 + (m ?? 0) + add;
   return `${Math.floor(total / 60)}h${String(total % 60).padStart(2, '0')}`;
