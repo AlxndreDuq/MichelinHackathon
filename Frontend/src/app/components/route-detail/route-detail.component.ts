@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppStateService } from '../../services/app-state.service';
 import { RouteDataService, LeaderboardEntry, Review } from '../../services/route-data.service';
 
-const API = 'http://localhost:3000';
+const API = import.meta.env.NG_APP_API_URL;
 
 @Component({
   selector: 'app-route-detail',

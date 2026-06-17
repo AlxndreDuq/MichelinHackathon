@@ -11,7 +11,7 @@ interface Player {
   you?:     boolean;
 }
 
-const API = 'http://localhost:3000';
+const API = import.meta.env.NG_APP_API_URL;
 
 @Component({
   selector: 'app-classement',
