@@ -1,33 +1,25 @@
-version: "3.9"
-
 services:
   backend:
-    build:
-      context: ./backend
+    image: ghcr.io/${GITHUB_REPOSITORY}/backend:latest
     container_name: backend
     ports:
       - "3000:3000"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/appdb
-    command: sh -c "npm install --prefer-offline && npm run dev"
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/appdb
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
 
   frontend:
-    build:
-      context: ./frontend
+    image: ghcr.io/${GITHUB_REPOSITORY}/frontend:latest
     container_name: frontend
     ports:
-      - "4200:4200"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
 
   db:
     image: postgres:16
@@ -35,18 +27,14 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: appdb
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d appdb"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
-      timeout: 5s
-      retries: 10
+      retries: 5
 
 volumes:
   pgdata:
