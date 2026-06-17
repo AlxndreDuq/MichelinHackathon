@@ -37,15 +37,15 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: backend/package-lock.json
+          cache-dependency-path: Backend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: backend
+        working-directory: Backend
 
       - name: Run tests
         run: npm run test
-        working-directory: backend
+        working-directory: Backend
         env:
           NODE_ENV: test
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/appdb
@@ -72,7 +72,7 @@ jobs:
       - name: Build & push backend
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ./Backend
           push: true
           tags: |
             ${{ env.IMAGE_BACK }}:latest
@@ -81,7 +81,7 @@ jobs:
       - name: Build & push frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./Frontend
           push: true
           tags: |
             ${{ env.IMAGE_FRONT }}:latest
