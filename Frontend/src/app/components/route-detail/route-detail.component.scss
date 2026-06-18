@@ -232,6 +232,84 @@
   color: var(--ink);
 }
 
+/* ── Tire catalog ───────────────────────────────────────── */
+.tire-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.tire-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--cream);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 10px 12px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+}
+
+.tire-img {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tire-name {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.tire-tagline {
+  display: inline-flex;
+  background: var(--cream-dim);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  padding: 2px 9px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--muted-1);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.tire-see-more {
+  align-self: center;
+  background: var(--cream);
+  color: var(--ink);
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  padding: 9px 18px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease;
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+}
+
 /* ── Map section ────────────────────────────────────────── */
 .map-section {
   display: flex;

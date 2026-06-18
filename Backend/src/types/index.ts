@@ -39,6 +39,15 @@ export interface Review {
   comment:  string;
 }
 
+export interface Product {
+  id:      string;
+  name:    string;
+  bike:    Bike;
+  tagline: string;
+  eanCode?: string;
+  url:     string;
+}
+
 export interface BoardPlayer {
   rank:     number;
   name:     string;

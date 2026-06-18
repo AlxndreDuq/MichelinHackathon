@@ -31,6 +31,7 @@ describe('ensureSchema', () => {
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS board_players');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS reviews');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS profile_routes');
+    expect(sql).toContain('CREATE TABLE IF NOT EXISTS products');
   });
 
   it('propagates pool errors', async () => {

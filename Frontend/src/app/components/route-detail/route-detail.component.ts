@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppStateService } from '../../services/app-state.service';
 import { AuthService, AuthProfile } from '../../services/auth.service';
 import { RouteDataService, LeaderboardEntry, Review } from '../../services/route-data.service';
+import { ProductDataService } from '../../services/product-data.service';
 import * as L from 'leaflet';
 
 const API = import.meta.env.NG_APP_API_URL;
@@ -20,10 +21,11 @@ interface CompleteResponse {
   styleUrl: './route-detail.component.scss'
 })
 export class RouteDetailComponent implements AfterViewInit, OnDestroy {
-  state = inject(AppStateService);
-  auth  = inject(AuthService);
-  data  = inject(RouteDataService);
-  http  = inject(HttpClient);
+  state     = inject(AppStateService);
+  auth      = inject(AuthService);
+  data      = inject(RouteDataService);
+  products  = inject(ProductDataService);
+  http      = inject(HttpClient);
 
   @ViewChild('mapElement') mapElement!: ElementRef;
   private map: L.Map | null = null;
@@ -32,6 +34,15 @@ export class RouteDetailComponent implements AfterViewInit, OnDestroy {
   route       = computed(() => this.data.get(this.state.openRun() ?? ''));
   leaderboard = signal<LeaderboardEntry[]>([]);
   pointsAwarded = signal<number | null>(null);
+
+  showAllTires  = signal(false);
+  matchingTires = computed(() => {
+    const r = this.route();
+    return r ? this.products.forBike(r.bike) : [];
+  });
+  visibleTires = computed(() =>
+    this.showAllTires() ? this.matchingTires() : this.matchingTires().slice(0, 5),
+  );
 
   get reviews(): Review[] { return this.data.reviews(); }
 

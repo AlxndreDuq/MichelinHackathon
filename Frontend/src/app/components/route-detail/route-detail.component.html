@@ -103,6 +103,37 @@
     </div>
   </div>
 
+  <!-- Pneus MICHELIN recommandés -->
+  @if (matchingTires().length > 0) {
+    <div class="section">
+      <h3 class="section-title">Pneus MICHELIN recommandés</h3>
+      <div class="tire-grid">
+        @for (tire of visibleTires(); track tire.id) {
+          <a class="tire-card pressable" [href]="tire.url" target="_blank" rel="noopener noreferrer">
+            <div class="tire-img">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="17" stroke="#15140F" stroke-width="2.5"/>
+                <circle cx="20" cy="20" r="7" stroke="#15140F" stroke-width="2.5" fill="#F3EAD3"/>
+                @for (i of [0,1,2,3,4,5,6,7]; track i) {
+                  <rect [attr.x]="19.1" [attr.y]="3.5"
+                    width="1.8" height="6" rx="0.9" fill="#15140F"
+                    [attr.transform]="'rotate(' + (i * 45) + ' 20 20)'"/>
+                }
+              </svg>
+            </div>
+            <p class="tire-name">{{ tire.name }}</p>
+            <span class="tire-tagline">{{ tire.tagline }}</span>
+          </a>
+        }
+      </div>
+      @if (matchingTires().length > 5 && !showAllTires()) {
+        <button class="tire-see-more pressable" type="button" (click)="showAllTires.set(true)">
+          Voir plus ({{ matchingTires().length - 5 }})
+        </button>
+      }
+    </div>
+  }
+
   <!-- Avis des riders -->
   <div class="section">
     <h3 class="section-title">Avis des riders</h3>

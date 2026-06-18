@@ -92,6 +92,15 @@ export async function ensureSchema(): Promise<void> {
       completed_at TIMESTAMP   NOT NULL DEFAULT now(),
       PRIMARY KEY (profile_id, route_id)
     );
+
+    CREATE TABLE IF NOT EXISTS products (
+      id       VARCHAR(80)  PRIMARY KEY,
+      name     VARCHAR(100) NOT NULL,
+      bike     VARCHAR(10)  NOT NULL CHECK (bike IN ('route', 'gravel', 'vtt')),
+      tagline  VARCHAR(60)  NOT NULL,
+      ean_code VARCHAR(20),
+      url      VARCHAR(255) NOT NULL
+    );
   `);
   console.log('✓ Schema ready');
 }
