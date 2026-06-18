@@ -12,14 +12,14 @@ export function addMin(base: string, add: number): string {
 // ─── routes ──────────────────────────────────────────────────────────────────
 
 const ROUTES = [
-  { id: 'lac',      name: 'Tour du Lac',         creator: '@thomas_velo',  tier: 'vert',  dist: 18, deniv: 320,  time: '0h48', stars: 4, reviewCount: 64,  plays: 3200, hot: true,  bike: 'route',  note: 'Parfait pour un dimanche matin. La vue sur le lac au km 12 vaut le détour !' },
-  { id: 'foret',    name: 'Singletrack Forêt',   creator: '@julie_gravel', tier: 'bleu',  dist: 15, deniv: 450,  time: '1h05', stars: 4, reviewCount: 38,  plays: 960,  hot: false, bike: 'vtt',    note: 'Les racines en descente sont techniques. Prends ton temps sur la section nord.' },
-  { id: 'cretes',   name: 'Crêtes du Vercors',   creator: '@marc_alpin',   tier: 'rouge', dist: 42, deniv: 1200, time: '2h15', stars: 5, reviewCount: 128, plays: 2400, hot: true,  bike: 'route',  note: 'Le spot ultime en Isère. Pars tôt pour éviter la chaleur sur le col principal.' },
-  { id: 'arzelier', name: "Col de l'Arzelier",   creator: '@pierrot38',    tier: 'bleu',  dist: 28, deniv: 780,  time: '1h22', stars: 4, reviewCount: 52,  plays: 1800, hot: false, bike: 'gravel', note: 'Montée progressive avec un final raide. Les graviers du col sont bien praticables.' },
-  { id: 'plateau',  name: 'Plateau Gravel',       creator: '@emma_trek',    tier: 'vert',  dist: 22, deniv: 280,  time: '1h10', stars: 4, reviewCount: 29,  plays: 740,  hot: false, bike: 'gravel', note: 'Idéal pour débuter le gravel. Vue panoramique exceptionnelle au sommet.' },
-  { id: 'nuit',     name: 'Ride Nocturne',        creator: '@night_rider',  tier: 'bleu',  dist: 25, deniv: 520,  time: '1h30', stars: 5, reviewCount: 41,  plays: 580,  hot: true,  bike: 'route',  note: "L'expérience unique de Grenoble by night. Lampes frontales obligatoires !" },
-  { id: 'mur',      name: 'Le Mur de Sassenage', creator: '@climber_pro',  tier: 'noir',  dist: 8,  deniv: 680,  time: '0h38', stars: 5, reviewCount: 87,  plays: 320,  hot: false, bike: 'route',  note: "Pente max 22%. Si tu passes ce mur, tu mérites le titre de Légende." },
-  { id: 'canal',    name: 'Voie du Canal',        creator: '@casual_rider', tier: 'vert',  dist: 35, deniv: 80,   time: '1h45', stars: 4, reviewCount: 103, plays: 2100, hot: false, bike: 'route',  note: 'La balade familiale par excellence. Plat, sécurisé, idéal pour tous niveaux.' },
+  { id: 'lac',      name: 'Tour du Lac',         creator: '@thomas_velo',  tier: 'vert',  dist: 18, deniv: 320,  time: '0h48', stars: 4, reviewCount: 64,  plays: 3200, hot: true,  bike: 'route',  note: 'Parfait pour un dimanche matin. La vue sur le lac au km 12 vaut le détour !', dept: 'Isère' },
+  { id: 'foret',    name: 'Singletrack Forêt',   creator: '@julie_gravel', tier: 'bleu',  dist: 15, deniv: 450,  time: '1h05', stars: 4, reviewCount: 38,  plays: 960,  hot: false, bike: 'vtt',    note: 'Les racines en descente sont techniques. Prends ton temps sur la section nord.', dept: 'Savoie' },
+  { id: 'cretes',   name: 'Crêtes du Vercors',   creator: '@marc_alpin',   tier: 'rouge', dist: 42, deniv: 1200, time: '2h15', stars: 5, reviewCount: 128, plays: 2400, hot: true,  bike: 'route',  note: 'Le spot ultime en Isère. Pars tôt pour éviter la chaleur sur le col principal.', dept: 'Drôme' },
+  { id: 'arzelier', name: "Col de l'Arzelier",   creator: '@pierrot38',    tier: 'bleu',  dist: 28, deniv: 780,  time: '1h22', stars: 4, reviewCount: 52,  plays: 1800, hot: false, bike: 'gravel', note: 'Montée progressive avec un final raide. Les graviers du col sont bien praticables.', dept: 'Isère' },
+  { id: 'plateau',  name: 'Plateau Gravel',       creator: '@emma_trek',    tier: 'vert',  dist: 22, deniv: 280,  time: '1h10', stars: 4, reviewCount: 29,  plays: 740,  hot: false, bike: 'gravel', note: 'Idéal pour débuter le gravel. Vue panoramique exceptionnelle au sommet.', dept: 'Ain' },
+  { id: 'nuit',     name: 'Ride Nocturne',        creator: '@night_rider',  tier: 'bleu',  dist: 25, deniv: 520,  time: '1h30', stars: 5, reviewCount: 41,  plays: 580,  hot: true,  bike: 'route',  note: "L'expérience unique de Grenoble by night. Lampes frontales obligatoires !", dept: 'Isère' },
+  { id: 'mur',      name: 'Le Mur de Sassenage', creator: '@climber_pro',  tier: 'noir',  dist: 8,  deniv: 680,  time: '0h38', stars: 5, reviewCount: 87,  plays: 320,  hot: false, bike: 'route',  note: "Pente max 22%. Si tu passes ce mur, tu mérites le titre de Légende.", dept: 'Isère' },
+  { id: 'canal',    name: 'Voie du Canal',        creator: '@casual_rider', tier: 'vert',  dist: 35, deniv: 80,   time: '1h45', stars: 4, reviewCount: 103, plays: 2100, hot: false, bike: 'route',  note: 'La balade familiale par excellence. Plat, sécurisé, idéal pour tous niveaux.', dept: 'Rhône' },
 ];
 
 // ─── reviews ─────────────────────────────────────────────────────────────────
@@ -102,9 +102,9 @@ async function insertAll(): Promise<void> {
     // ── routes (8) ──────────────────────────────────────────────────────────
     for (const r of ROUTES) {
       await client.query(
-        `INSERT INTO routes (id, name, creator, tier, dist, deniv, time, stars, review_count, plays, hot, bike, note)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
-        [r.id, r.name, r.creator, r.tier, r.dist, r.deniv, r.time, r.stars, r.reviewCount, r.plays, r.hot, r.bike, r.note],
+        `INSERT INTO routes (id, name, creator, tier, dist, deniv, time, stars, review_count, plays, hot, bike, note, department)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`,
+        [r.id, r.name, r.creator, r.tier, r.dist, r.deniv, r.time, r.stars, r.reviewCount, r.plays, r.hot, r.bike, r.note, r.dept],
       );
     }
     console.log(`  ✓ ${ROUTES.length} routes`);

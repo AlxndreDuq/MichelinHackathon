@@ -20,6 +20,8 @@ export async function ensureSchema(): Promise<void> {
       gpx_coordinates JSONB
     );
 
+    ALTER TABLE routes ADD COLUMN IF NOT EXISTS dept VARCHAR(50) NOT NULL DEFAULT 'Isère';
+
     CREATE TABLE IF NOT EXISTS reviews (
       id       SERIAL       PRIMARY KEY,
       name     VARCHAR(100) NOT NULL,

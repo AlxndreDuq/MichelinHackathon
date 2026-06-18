@@ -51,7 +51,7 @@ router.get('/routes', async (req: AuthedRequest, res) => {
 
     const { rows } = await pool.query<Route>(
       `SELECT r.id, r.name, r.creator, r.tier, r.dist, r.deniv, r.time, r.stars,
-              r.review_count AS "reviewCount", r.plays, r.hot, r.bike, r.note
+              r.review_count AS "reviewCount", r.plays, r.hot, r.bike, r.note, r.dept
        FROM routes r
        JOIN profile_routes pr ON pr.route_id = r.id
        WHERE pr.profile_id = $1

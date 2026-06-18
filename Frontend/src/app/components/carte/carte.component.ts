@@ -1,17 +1,25 @@
-import { Component, inject } from '@angular/core';
-import { AppStateService } from '../../services/app-state.service';
-
-export type NodeState = 'completed' | 'current' | 'locked' | 'unlocked';
+import { Component, computed, inject, signal } from '@angular/core';
+import { AppStateService, Tier } from '../../services/app-state.service';
+import { RouteDataService, Route } from '../../services/route-data.service';
+import { DepartmentService } from '../../services/department.service';
 
 export interface MapNode {
   id:    string;
   name:  string;
-  tier:  'vert' | 'bleu' | 'rouge' | 'noir';
-  state: NodeState;
+  tier:  Tier;
   stars: number;
   cx:    number; // horizontal center in px within map area
   cy:    number; // vertical center in px within map area
 }
+
+const START_Y = 70;
+const STEP_Y  = 132;
+const LEFT_X  = 115;
+const RIGHT_X = 230;
+const RATING_OFFSET = 24;
+const CIRCLE_RADIUS = 31;
+const BOTTOM_PADDING = 220;
+const MIN_MAP_HEIGHT = 400;
 
 @Component({
   selector: 'app-carte',
@@ -22,35 +30,61 @@ export interface MapNode {
 })
 export class CarteComponent {
   state = inject(AppStateService);
+  data  = inject(RouteDataService);
+  dept  = inject(DepartmentService);
 
-  readonly nodes: MapNode[] = [
-    { id: 'lac',      name: 'Tour du Lac',         tier: 'vert',  state: 'completed', stars: 2, cx: 220, cy: 70  },
-    { id: 'foret',    name: 'Singletrack Forêt',   tier: 'bleu',  state: 'completed', stars: 1, cx: 110, cy: 202 },
-    { id: 'cretes',   name: 'Crêtes du Vercors',   tier: 'rouge', state: 'completed', stars: 3, cx: 235, cy: 334 },
-    { id: 'arzelier', name: "Col de l'Arzelier",   tier: 'bleu',  state: 'current',   stars: 0, cx: 120, cy: 466 },
-    { id: 'plateau',  name: 'Plateau Gravel',       tier: 'vert',  state: 'locked',    stars: 0, cx: 230, cy: 598 },
-    { id: 'nuit',     name: 'Ride Nocturne',        tier: 'bleu',  state: 'locked',    stars: 0, cx: 110, cy: 730 },
-    { id: 'mur',      name: 'Le Mur de Sassenage', tier: 'noir',  state: 'locked',    stars: 0, cx: 235, cy: 862 },
-  ];
+  readonly deptMenuOpen = signal(false);
 
-  // SVG path connecting node centers with smooth cubic beziers
-  readonly trailPath = this.buildTrailPath();
+  readonly filteredRoutes = computed(() =>
+    this.data.routes().filter(r => r.dept === this.dept.department()),
+  );
 
-  filledStars(n: number): number[] { return Array.from({ length: n },      (_, i) => i); }
-  emptyStars(n: number):  number[] { return Array.from({ length: 3 - n },  (_, i) => i); }
+  readonly nodes = computed(() => this.layoutNodes(this.filteredRoutes()));
 
-  // Group wrapper positioned so the node-btn center sits exactly on (cx, cy)
-  // For completed nodes, extra space above for stars → shift group up
+  readonly sidequestRoute = computed(() => {
+    const list = this.filteredRoutes();
+    return list.find(r => r.hot) ?? list[0];
+  });
+
+  readonly trailPath = computed(() => this.buildTrailPath(this.nodes()));
+
+  readonly mapHeight = computed(() => {
+    const n = this.nodes().length;
+    return n > 0 ? START_Y + (n - 1) * STEP_Y + BOTTOM_PADDING : MIN_MAP_HEIGHT;
+  });
+
   groupTop(node: MapNode): number {
-    return node.state === 'completed' ? node.cy - 31 - 24 : node.cy - 31;
+    return node.cy - CIRCLE_RADIUS - RATING_OFFSET;
   }
 
   tapNode(node: MapNode): void {
-    if (node.state !== 'locked') this.state.openRoute(node.id);
+    this.state.openRoute(node.id);
   }
 
-  private buildTrailPath(): string {
-    const pts = this.nodes?.map(n => ({ x: n.cx, y: n.cy })) ?? [];
+  toggleDeptMenu(): void {
+    this.deptMenuOpen.set(!this.deptMenuOpen());
+  }
+
+  selectDepartment(name: string): void {
+    this.dept.setDepartment(name);
+    this.deptMenuOpen.set(false);
+  }
+
+  private layoutNodes(routes: Route[]): MapNode[] {
+    // Start on the left column — the right side near the top is where the
+    // sidequest card floats, and would block taps on a single-route node.
+    return routes.map((r, i) => ({
+      id:    r.id,
+      name:  r.name,
+      tier:  r.tier,
+      stars: r.stars,
+      cx:    i % 2 === 0 ? LEFT_X : RIGHT_X,
+      cy:    START_Y + i * STEP_Y,
+    }));
+  }
+
+  private buildTrailPath(nodes: MapNode[]): string {
+    const pts = nodes.map(n => ({ x: n.cx, y: n.cy }));
     if (pts.length < 2) return '';
     let d = `M ${pts[0].x},${pts[0].y}`;
     for (let i = 1; i < pts.length; i++) {
