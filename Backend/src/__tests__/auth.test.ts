@@ -66,14 +66,15 @@ describe('POST /register', () => {
     mockConnect.mockResolvedValueOnce(client);
     // getProfileForUser() call after commit uses pool.query, not the client
     mockQuery
-      .mockResolvedValueOnce({ rows: [{ id: 42, name: 'A', rank: 'Bronze', points: 0, target: 1000 }] })
+      .mockResolvedValueOnce({ rows: [{ id: 42, name: 'A', points: 0 }] })
       .mockResolvedValueOnce({ rows: [] });
 
     const res = await request(makeApp()).post('/register').send({ name: 'A', email: 'a@b.com', password: 'secret1' });
 
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty('token');
-    expect(res.body.profile).toMatchObject({ name: 'A', rank: 'Bronze', points: 0, target: 1000, medals: [] });
+    expect(res.body.profile).toMatchObject({ name: 'A', rank: 'Bronze', points: 0, nextRank: 'Argent' });
+    expect((res.body.profile.badges as { unlocked: boolean }[]).every(b => !b.unlocked)).toBe(true);
   });
 });
 
@@ -105,14 +106,14 @@ describe('POST /login', () => {
   it('returns 200 with a token and profile on success', async () => {
     const hash = bcrypt.hashSync('correct-password', 4);
     mockQuery
-      .mockResolvedValueOnce({ rows: [{ id: 1, password_hash: hash }] })                          // user lookup
-      .mockResolvedValueOnce({ rows: [{ id: 9, name: 'Léa M.', rank: 'Or', points: 3450, target: 5000 }] }) // profile
-      .mockResolvedValueOnce({ rows: [{ label: 'Or', color: '#E8B43A', count: 4 }] });             // medals
+      .mockResolvedValueOnce({ rows: [{ id: 1, password_hash: hash }] })            // user lookup
+      .mockResolvedValueOnce({ rows: [{ id: 9, name: 'Léa M.', points: 1650 }] })   // profile
+      .mockResolvedValueOnce({ rows: [] });                                        // completions
 
     const res = await request(makeApp()).post('/login').send({ email: 'a@b.com', password: 'correct-password' });
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('token');
-    expect(res.body.profile).toMatchObject({ name: 'Léa M.', rank: 'Or' });
+    expect(res.body.profile).toMatchObject({ name: 'Léa M.', rank: 'Or', points: 1650 });
   });
 });

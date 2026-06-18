@@ -85,6 +85,13 @@ export async function ensureSchema(): Promise<void> {
       sort_order INTEGER     NOT NULL DEFAULT 0,
       PRIMARY KEY (profile_id, route_id)
     );
+
+    CREATE TABLE IF NOT EXISTS route_completions (
+      profile_id   INTEGER     NOT NULL REFERENCES profile(id) ON DELETE CASCADE,
+      route_id     VARCHAR(50) NOT NULL REFERENCES routes(id) ON DELETE CASCADE,
+      completed_at TIMESTAMP   NOT NULL DEFAULT now(),
+      PRIMARY KEY (profile_id, route_id)
+    );
   `);
   console.log('✓ Schema ready');
 }

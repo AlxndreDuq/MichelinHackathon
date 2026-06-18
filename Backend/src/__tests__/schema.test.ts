@@ -25,6 +25,7 @@ describe('ensureSchema', () => {
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS routes');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS users');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS profile');
+    expect(sql).toContain('CREATE TABLE IF NOT EXISTS route_completions');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS medals');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS route_leaderboard');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS board_players');

@@ -468,6 +468,19 @@
   color: white;
 }
 
+.confirm-points {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--yellow);
+  letter-spacing: .02em;
+
+  &.confirm-points-muted {
+    color: rgba(255,255,255,.75);
+    font-weight: 700;
+  }
+}
+
 .confirm-sub {
   font-family: 'Nunito', sans-serif;
   font-weight: 700;

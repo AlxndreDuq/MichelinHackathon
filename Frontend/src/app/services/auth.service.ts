@@ -1,12 +1,23 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
+export interface Badge {
+  id:       string;
+  label:    string;
+  icon:     string;
+  unlocked: boolean;
+}
+
 export interface AuthProfile {
-  name:   string;
-  rank:   string;
-  points: number;
-  target: number;
-  medals: { label: string; color: string; count: number }[];
+  name:         string;
+  points:       number;
+  rank:         string;
+  rankPerk:     string;
+  nextRank:     string | null;
+  nextRankPerk: string | null;
+  pointsToNext: number | null;
+  progressPct:  number;
+  badges:       Badge[];
 }
 
 interface AuthResponse {
@@ -69,6 +80,10 @@ export class AuthService {
     localStorage.removeItem(TOKEN_KEY);
     this.token.set(null);
     this.profile.set(null);
+  }
+
+  setProfile(p: AuthProfile): void {
+    this.profile.set(p);
   }
 
   private onAuthSuccess(res: AuthResponse): void {

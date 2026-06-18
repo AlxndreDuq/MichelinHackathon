@@ -22,10 +22,14 @@ function makeApp() {
 
 const AUTH_HEADER = `Bearer ${signToken(1)}`;
 
-const PROFILE_ROW = { id: 1, name: 'Léa M.', rank: 'Or', points: 3450, target: 5000 };
-const MEDALS      = [
-  { label: 'Or',     color: '#E8B43A', count: 4 },
-  { label: 'Argent', color: '#B9BBC0', count: 9 },
+const PROFILE_ROW = { id: 1, name: 'Léa M.', points: 1650 };
+const COMPLETIONS = [
+  { tier: 'vert',  department: 'Isère' },
+  { tier: 'bleu',  department: 'Savoie' },
+  { tier: 'rouge', department: 'Drôme' },
+  { tier: 'bleu',  department: 'Isère' },
+  { tier: 'bleu',  department: 'Isère' },
+  { tier: 'noir',  department: 'Isère' },
 ];
 const ROUTE_ROW = {
   id: 'cretes', name: 'Crêtes du Vercors', creator: '@marc_alpin',
@@ -44,15 +48,25 @@ describe('GET /profile', () => {
     expect(mockQuery).not.toHaveBeenCalled();
   });
 
-  it('returns 200 with profile and medals', async () => {
+  it('returns 200 with the computed rank and badges', async () => {
     mockQuery
-      .mockResolvedValueOnce({ rows: [PROFILE_ROW] })  // profile query
-      .mockResolvedValueOnce({ rows: MEDALS });         // medals query
+      .mockResolvedValueOnce({ rows: [PROFILE_ROW] })   // profile query
+      .mockResolvedValueOnce({ rows: COMPLETIONS });     // completions query
 
     const res = await request(makeApp()).get('/').set('Authorization', AUTH_HEADER);
 
     expect(res.status).toBe(200);
-    expect(res.body).toMatchObject({ name: 'Léa M.', medals: MEDALS });
+    expect(res.body).toMatchObject({
+      name: 'Léa M.',
+      points: 1650,
+      rank: 'Or',
+      nextRank: 'Légende',
+      pointsToNext: 1350,
+      progressPct: 10,
+    });
+    const unlocked = (res.body.badges as { id: string; unlocked: boolean }[])
+      .filter(b => b.unlocked).map(b => b.id);
+    expect(unlocked.sort()).toEqual(['globe-trotter', 'premier-tour', 'rider-assidu', 'roi-montagne'].sort());
   });
 
   it('returns 404 when no profile exists', async () => {
@@ -72,7 +86,7 @@ describe('GET /profile', () => {
     expect(res.status).toBe(500);
   });
 
-  it('returns 500 on DB error in medals query', async () => {
+  it('returns 500 on DB error in completions query', async () => {
     mockQuery
       .mockResolvedValueOnce({ rows: [PROFILE_ROW] })
       .mockRejectedValueOnce(new Error('DB error'));
@@ -139,5 +153,64 @@ describe('GET /profile/routes', () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual([]);
+  });
+});
+
+describe('POST /routes/:id/complete', () => {
+  beforeEach(() => vi.clearAllMocks());
+
+  it('returns 401 when no token is provided', async () => {
+    const res = await request(makeApp()).post('/routes/cretes/complete');
+
+    expect(res.status).toBe(401);
+    expect(mockQuery).not.toHaveBeenCalled();
+  });
+
+  it('awards points on first completion', async () => {
+    mockQuery
+      .mockResolvedValueOnce({ rows: [{ id: 1 }] })              // profile lookup
+      .mockResolvedValueOnce({ rows: [{ tier: 'bleu' }] })       // route lookup
+      .mockResolvedValueOnce({ rowCount: 1, rows: [] })          // INSERT (new row)
+      .mockResolvedValueOnce({ rowCount: 1, rows: [] })          // UPDATE points
+      .mockResolvedValueOnce({ rows: [{ id: 1, name: 'Test', points: 200 }] }) // getProfileForUser: profile
+      .mockResolvedValueOnce({ rows: [{ tier: 'bleu', department: 'Isère' }] }); // getProfileForUser: completions
+
+    const res = await request(makeApp()).post('/routes/foret/complete').set('Authorization', AUTH_HEADER);
+
+    expect(res.status).toBe(200);
+    expect(res.body.pointsAwarded).toBe(200);
+    expect(res.body.profile.points).toBe(200);
+  });
+
+  it('awards no points when the route was already completed', async () => {
+    mockQuery
+      .mockResolvedValueOnce({ rows: [{ id: 1 }] })
+      .mockResolvedValueOnce({ rows: [{ tier: 'bleu' }] })
+      .mockResolvedValueOnce({ rowCount: 0, rows: [] })          // INSERT conflicts — already exists
+      .mockResolvedValueOnce({ rows: [{ id: 1, name: 'Test', points: 200 }] })
+      .mockResolvedValueOnce({ rows: [{ tier: 'bleu', department: 'Isère' }] });
+
+    const res = await request(makeApp()).post('/routes/foret/complete').set('Authorization', AUTH_HEADER);
+
+    expect(res.status).toBe(200);
+    expect(res.body.pointsAwarded).toBe(0);
+  });
+
+  it('returns 404 when the route does not exist', async () => {
+    mockQuery
+      .mockResolvedValueOnce({ rows: [{ id: 1 }] })
+      .mockResolvedValueOnce({ rows: [] });
+
+    const res = await request(makeApp()).post('/routes/unknown/complete').set('Authorization', AUTH_HEADER);
+
+    expect(res.status).toBe(404);
+  });
+
+  it('returns 404 when the profile does not exist', async () => {
+    mockQuery.mockResolvedValueOnce({ rows: [] });
+
+    const res = await request(makeApp()).post('/routes/cretes/complete').set('Authorization', AUTH_HEADER);
+
+    expect(res.status).toBe(404);
   });
 });

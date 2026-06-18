@@ -133,7 +133,7 @@
   <!-- CTA -->
   <div class="cta-section">
     @if (!state.playing()) {
-      <button class="cta-btn pressable" (click)="state.play()">
+      <button class="cta-btn pressable" (click)="playRoute(r.id)">
         Jouer ce parcours →
       </button>
       <p class="cta-caption">Suivi auto via Strava — ton temps sera enregistré automatiquement.</p>
@@ -145,7 +145,14 @@
           </svg>
         </div>
         <p class="confirm-title">C'est parti !</p>
-        <p class="confirm-sub">Suivi Strava actif · Bonne route, Léa !</p>
+        @if (pointsAwarded() !== null) {
+          @if (pointsAwarded()! > 0) {
+            <p class="confirm-points">+{{ pointsAwarded() }} pts gagnés !</p>
+          } @else {
+            <p class="confirm-points confirm-points-muted">Déjà complété · aucun nouveau point</p>
+          }
+        }
+        <p class="confirm-sub">Suivi Strava actif · Bonne route, {{ auth.profile()?.name }} !</p>
       </div>
     }
   </div>

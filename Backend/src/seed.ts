@@ -75,15 +75,17 @@ const YOU_OFFSET = 49;
 
 const DEMO_USER = { email: 'lea@michelin.com', password: 'michelin2026' };
 
-const PROFILE = { name: 'Léa M.', rank: 'Or', points: 3450, target: 5000 };
-
-const MEDALS = [
-  { label: 'Or',     color: '#E8B43A', count: 4,  sort_order: 0 },
-  { label: 'Argent', color: '#B9BBC0', count: 9,  sort_order: 1 },
-  { label: 'Bronze', color: '#C8895A', count: 12, sort_order: 2 },
-];
+// rank/target are legacy columns kept for the NOT NULL constraint — the API
+// now computes rank from points (see Backend/src/services/gamification.ts)
+// and no longer reads either column.
+const PROFILE = { name: 'Léa M.', rank: 'Or', points: 1650, target: 0 };
 
 const PUBLISHED_ROUTE_IDS = ['cretes', 'arzelier', 'nuit'];
+
+// 6 of the 8 seeded routes, summing to exactly PROFILE.points at their tier
+// values (100+200+350+200+200+600=1650) — leaves 'plateau'/'canal' undone so
+// the demo account shows believable partial progress.
+const COMPLETED_ROUTE_IDS = ['lac', 'foret', 'cretes', 'arzelier', 'nuit', 'mur'];
 
 // ─── seed logic ──────────────────────────────────────────────────────────────
 
@@ -94,7 +96,7 @@ async function insertAll(): Promise<void> {
 
     // Clear all tables (child tables first to respect FK constraints)
     await client.query(`
-      TRUNCATE profile_routes, medals, profile, users,
+      TRUNCATE profile_routes, medals, route_completions, profile, users,
                route_leaderboard, board_players, reviews, routes
       RESTART IDENTITY
     `);
@@ -156,7 +158,7 @@ async function insertAll(): Promise<void> {
     }
     console.log(`  ✓ ${lbCount} leaderboard entries`);
 
-    // ── demo user + profile (1) + medals (3) + published routes (3) ──────────
+    // ── demo user + profile (1) + completions (6) + published routes (3) ────
     const passwordHash = await bcrypt.hash(DEMO_USER.password, 10);
     const userRes = await client.query<{ id: number }>(
       'INSERT INTO users (email, password_hash) VALUES ($1,$2) RETURNING id',
@@ -171,10 +173,10 @@ async function insertAll(): Promise<void> {
     );
     const profileId = profileRes.rows[0]!.id;
 
-    for (const m of MEDALS) {
+    for (const routeId of COMPLETED_ROUTE_IDS) {
       await client.query(
-        'INSERT INTO medals (profile_id, label, color, count, sort_order) VALUES ($1,$2,$3,$4,$5)',
-        [profileId, m.label, m.color, m.count, m.sort_order],
+        'INSERT INTO route_completions (profile_id, route_id) VALUES ($1,$2)',
+        [profileId, routeId],
       );
     }
 
@@ -184,7 +186,7 @@ async function insertAll(): Promise<void> {
         [profileId, PUBLISHED_ROUTE_IDS[i], i],
       );
     }
-    console.log(`  ✓ 1 profile · ${MEDALS.length} medals · ${PUBLISHED_ROUTE_IDS.length} published routes`);
+    console.log(`  ✓ 1 profile · ${COMPLETED_ROUTE_IDS.length} completions · ${PUBLISHED_ROUTE_IDS.length} published routes`);
 
     await client.query('COMMIT');
   } catch (err) {

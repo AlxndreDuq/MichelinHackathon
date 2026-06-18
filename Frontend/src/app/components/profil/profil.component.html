@@ -13,25 +13,36 @@
     </div>
   </div>
 
-  <!-- ── Medals ──────────────────────────────────────────── -->
-  <div class="medals-row">
-    @for (medal of auth.profile()?.medals ?? []; track medal.label) {
-      <div class="medal-tile">
-        <div class="medal-disc" [style.background]="medal.color"></div>
-        <span class="medal-label">{{ medal.label }}</span>
-        <span class="medal-count">×{{ medal.count }}</span>
+  <!-- ── Badges ──────────────────────────────────────────── -->
+  <div class="badges-row">
+    @for (badge of auth.profile()?.badges ?? []; track badge.id) {
+      <div class="badge-tile" [class.locked]="!badge.unlocked">
+        <div class="badge-icon">{{ badge.icon }}</div>
+        <span class="badge-label">{{ badge.label }}</span>
       </div>
     }
   </div>
 
   <!-- ── Cagnotte MICHELIN ──────────────────────────────── -->
   <div class="cagnotte-card">
-    <span class="cagnotte-pill">-10 % débloqué</span>
+    <span class="cagnotte-pill">{{ auth.profile()?.rankPerk }}</span>
     <p class="cagnotte-pts">{{ formatPts(auth.profile()?.points ?? 0) }}</p>
     <div class="progress-bar">
-      <div class="progress-fill" [style.width.%]="progressPct"></div>
+      <div class="progress-fill" [style.width.%]="auth.profile()?.progressPct ?? 0"></div>
     </div>
-    <p class="cagnotte-sub">Plus que {{ formatPts(remaining) }} → statut Légende MICHELIN</p>
+
+    @if (auth.profile()?.nextRank; as nextRank) {
+      <p class="cagnotte-sub">Plus que {{ formatPts(auth.profile()?.pointsToNext ?? 0) }} → statut {{ nextRank }}</p>
+      <div class="next-rank-preview">
+        <span class="next-rank-lock">🔒</span>
+        <div class="next-rank-info">
+          <span class="next-rank-name">Prochain rang : {{ nextRank }}</span>
+          <span class="next-rank-perk">{{ auth.profile()?.nextRankPerk }}</span>
+        </div>
+      </div>
+    } @else {
+      <p class="cagnotte-sub cagnotte-maxed">Statut maximum atteint — tu es une Légende MICHELIN !</p>
+    }
   </div>
 
   <!-- ── Mes parcours publiés ───────────────────────────── -->

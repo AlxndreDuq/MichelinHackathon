@@ -1,10 +1,16 @@
 import { Component, inject, computed, signal, effect, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppStateService } from '../../services/app-state.service';
+import { AuthService, AuthProfile } from '../../services/auth.service';
 import { RouteDataService, LeaderboardEntry, Review } from '../../services/route-data.service';
 import * as L from 'leaflet';
 
 const API = import.meta.env.NG_APP_API_URL;
+
+interface CompleteResponse {
+  profile:       AuthProfile;
+  pointsAwarded: number;
+}
 
 @Component({
   selector: 'app-route-detail',
@@ -15,6 +21,7 @@ const API = import.meta.env.NG_APP_API_URL;
 })
 export class RouteDetailComponent implements AfterViewInit, OnDestroy {
   state = inject(AppStateService);
+  auth  = inject(AuthService);
   data  = inject(RouteDataService);
   http  = inject(HttpClient);
 
@@ -24,6 +31,7 @@ export class RouteDetailComponent implements AfterViewInit, OnDestroy {
 
   route       = computed(() => this.data.get(this.state.openRun() ?? ''));
   leaderboard = signal<LeaderboardEntry[]>([]);
+  pointsAwarded = signal<number | null>(null);
 
   get reviews(): Review[] { return this.data.reviews(); }
 
@@ -38,7 +46,7 @@ export class RouteDetailComponent implements AfterViewInit, OnDestroy {
             next:  data => this.leaderboard.set(data),
             error: err  => console.error('Leaderboard fetch failed:', err),
           });
-        
+
         // Initialize or redraw map when route changes
         setTimeout(() => this.initializeMap(), 0);
       } else {
@@ -91,10 +99,10 @@ export class RouteDetailComponent implements AfterViewInit, OnDestroy {
     }
 
     // Convert coordinates to Leaflet format [lat, lon]
-    const coordinates = Array.isArray(route.gpx_coordinates) 
-      ? route.gpx_coordinates 
+    const coordinates = Array.isArray(route.gpx_coordinates)
+      ? route.gpx_coordinates
       : JSON.parse(route.gpx_coordinates as any);
-    
+
     const latlngs: [number, number][] = coordinates.map((coord: any) => [coord.lat, coord.lon]);
 
     // Create and add polyline
@@ -109,6 +117,15 @@ export class RouteDetailComponent implements AfterViewInit, OnDestroy {
     // Fit bounds to show entire route
     const bounds = L.latLngBounds(latlngs);
     this.map.fitBounds(bounds, { padding: [50, 50] });
+  }
+
+  playRoute(routeId: string): void {
+    this.state.play();
+    this.pointsAwarded.set(null);
+    this.http.post<CompleteResponse>(`${API}/api/profile/routes/${routeId}/complete`, {}).subscribe({
+      next:  res => { this.auth.setProfile(res.profile); this.pointsAwarded.set(res.pointsAwarded); },
+      error: err => console.error('Route completion failed:', err),
+    });
   }
 
   starsRow(n: number): boolean[] {

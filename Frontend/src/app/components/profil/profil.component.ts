@@ -34,16 +34,6 @@ export class ProfilComponent {
     });
   }
 
-  get progressPct(): number {
-    const p = this.auth.profile();
-    return p ? Math.round((p.points / p.target) * 100) : 0;
-  }
-
-  get remaining(): number {
-    const p = this.auth.profile();
-    return p ? Math.max(p.target - p.points, 0) : 0;
-  }
-
   open(id: string): void { this.state.openRoute(id); }
 
   logout(): void { this.auth.logout(); }
