@@ -29,7 +29,7 @@ export async function getProfileForUser(userId: number): Promise<ProfileDto | nu
   if (!profile) return null;
 
   const { rows: completions } = await pool.query<{ tier: Tier; department: string }>(
-    `SELECT r.tier, r.department
+    `SELECT r.tier, r.dept AS department
      FROM route_completions rc
      JOIN routes r ON r.id = rc.route_id
      WHERE rc.profile_id = $1`,

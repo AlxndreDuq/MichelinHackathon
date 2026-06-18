@@ -104,7 +104,7 @@ async function insertAll(): Promise<void> {
     // ── routes (8) ──────────────────────────────────────────────────────────
     for (const r of ROUTES) {
       await client.query(
-        `INSERT INTO routes (id, name, creator, tier, dist, deniv, time, stars, review_count, plays, hot, bike, note, department)
+        `INSERT INTO routes (id, name, creator, tier, dist, deniv, time, stars, review_count, plays, hot, bike, note, dept)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`,
         [r.id, r.name, r.creator, r.tier, r.dist, r.deniv, r.time, r.stars, r.reviewCount, r.plays, r.hot, r.bike, r.note, r.dept],
       );
