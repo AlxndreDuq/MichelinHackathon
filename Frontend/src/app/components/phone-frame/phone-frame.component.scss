@@ -76,20 +76,9 @@
     gap: 2px;
   }
 
-  .masthead-title {
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 17px;
-    color: var(--blue);
-    line-height: 1;
-  }
-
-  .masthead-sub {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    color: var(--muted-2);
-    line-height: 1;
+  .masthead-logo {
+    height: 36px;
+    width: auto;
   }
 
   border-bottom: 1.5px solid var(--cream-dim);

@@ -22,17 +22,12 @@
 .marketing-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
 }
 
-.brand-michelin { color: var(--yellow); }
-.brand-dot      { color: var(--muted-3); }
-.brand-borne    { color: var(--cream); }
+.brand-logo {
+  height: 30px;
+  width: auto;
+}
 
 .marketing-hero {
   text-align: center;
