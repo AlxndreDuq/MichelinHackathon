@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AppStateService } from '../../services/app-state.service';
+import { AuthService } from '../../services/auth.service';
+import { AuthComponent } from '../auth/auth.component';
 import { BottomNavComponent } from '../bottom-nav/bottom-nav.component';
 import { CarteComponent } from '../carte/carte.component';
 import { RouteDetailComponent } from '../route-detail/route-detail.component';
@@ -11,10 +13,11 @@ import { ProfilComponent } from '../profil/profil.component';
 @Component({
   selector: 'app-phone-frame',
   standalone: true,
-  imports: [BottomNavComponent, CarteComponent, RouteDetailComponent, ExplorerComponent, CreerComponent, ClassementComponent, ProfilComponent],
+  imports: [AuthComponent, BottomNavComponent, CarteComponent, RouteDetailComponent, ExplorerComponent, CreerComponent, ClassementComponent, ProfilComponent],
   templateUrl: './phone-frame.component.html',
   styleUrl: './phone-frame.component.scss'
 })
 export class PhoneFrameComponent {
   state = inject(AppStateService);
+  auth  = inject(AuthService);
 }

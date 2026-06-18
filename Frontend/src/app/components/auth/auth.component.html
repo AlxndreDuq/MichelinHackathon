@@ -1,0 +1,58 @@
+<div class="auth popin">
+
+  <div class="auth-brand">
+    <span class="auth-pill">MICHELIN · Défi Vélo</span>
+    <h1 class="auth-title">{{ mode() === 'login' ? 'Content de te revoir' : 'Rejoins l’aventure' }}</h1>
+    <p class="auth-sub">Connecte-toi pour suivre tes parcours, tes points et ton classement.</p>
+  </div>
+
+  <div class="auth-toggle">
+    <button class="auth-toggle-btn" [class.active]="mode() === 'login'" (click)="setMode('login')">Connexion</button>
+    <button class="auth-toggle-btn" [class.active]="mode() === 'register'" (click)="setMode('register')">Inscription</button>
+  </div>
+
+  @if (auth.authError()) {
+    <div class="auth-error">{{ auth.authError() }}</div>
+  }
+
+  <form class="auth-form" (submit)="$event.preventDefault(); submit()">
+
+    @if (mode() === 'register') {
+      <div class="field">
+        <div class="field-label">Nom</div>
+        <input class="form-input" type="text" placeholder="Ton prénom" autocomplete="name"
+          [value]="name" (input)="name = $any($event.target).value">
+      </div>
+    }
+
+    <div class="field">
+      <div class="field-label">Email</div>
+      <input class="form-input" type="email" placeholder="toi@exemple.com" autocomplete="email"
+        [value]="email" (input)="email = $any($event.target).value">
+    </div>
+
+    <div class="field">
+      <div class="field-label">Mot de passe</div>
+      <input class="form-input" type="password" placeholder="••••••••" autocomplete="current-password"
+        [value]="password" (input)="password = $any($event.target).value">
+    </div>
+
+    <button class="btn-primary pressable auth-submit" type="submit" [disabled]="auth.loading()">
+      {{ auth.loading() ? '…' : (mode() === 'login' ? 'Se connecter' : 'Créer mon compte') }}
+    </button>
+
+  </form>
+
+  <button class="btn-secondary pressable auth-demo" type="button" (click)="fillDemo()">
+    Essayer le compte démo
+  </button>
+
+  <button class="auth-switch" type="button" (click)="setMode(mode() === 'login' ? 'register' : 'login')">
+    @if (mode() === 'login') {
+      Pas encore de compte ? <strong>Inscription</strong>
+    } @else {
+      Déjà un compte ? <strong>Connexion</strong>
+    }
+  </button>
+
+</div>

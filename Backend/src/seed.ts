@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { pool } from './db/client.js';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
@@ -72,6 +73,8 @@ const YOU_OFFSET = 49;
 
 // ─── profile ─────────────────────────────────────────────────────────────────
 
+const DEMO_USER = { email: 'lea@michelin.com', password: 'michelin2026' };
+
 const PROFILE = { name: 'Léa M.', rank: 'Or', points: 3450, target: 5000 };
 
 const MEDALS = [
@@ -91,7 +94,7 @@ async function insertAll(): Promise<void> {
 
     // Clear all tables (child tables first to respect FK constraints)
     await client.query(`
-      TRUNCATE profile_routes, medals, profile,
+      TRUNCATE profile_routes, medals, profile, users,
                route_leaderboard, board_players, reviews, routes
       RESTART IDENTITY
     `);
@@ -153,10 +156,18 @@ async function insertAll(): Promise<void> {
     }
     console.log(`  ✓ ${lbCount} leaderboard entries`);
 
-    // ── profile (1) + medals (3) + published routes (3) ─────────────────────
+    // ── demo user + profile (1) + medals (3) + published routes (3) ──────────
+    const passwordHash = await bcrypt.hash(DEMO_USER.password, 10);
+    const userRes = await client.query<{ id: number }>(
+      'INSERT INTO users (email, password_hash) VALUES ($1,$2) RETURNING id',
+      [DEMO_USER.email, passwordHash],
+    );
+    const userId = userRes.rows[0]!.id;
+    console.log(`  ✓ 1 demo user (${DEMO_USER.email})`);
+
     const profileRes = await client.query<{ id: number }>(
-      'INSERT INTO profile (name, rank, points, target) VALUES ($1,$2,$3,$4) RETURNING id',
-      [PROFILE.name, PROFILE.rank, PROFILE.points, PROFILE.target],
+      'INSERT INTO profile (user_id, name, rank, points, target) VALUES ($1,$2,$3,$4,$5) RETURNING id',
+      [userId, PROFILE.name, PROFILE.rank, PROFILE.points, PROFILE.target],
     );
     const profileId = profileRes.rows[0]!.id;
 

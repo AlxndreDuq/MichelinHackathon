@@ -1,32 +1,51 @@
 import { Router } from 'express';
 import { pool } from '../db/client.js';
+import { requireAuth } from '../middleware/auth.js';
+import type { AuthedRequest } from '../middleware/auth.js';
 import type { Route } from '../types/index.js';
 
 const router = Router();
 
-router.get('/', async (_req, res) => {
+export interface ProfileDto {
+  name: string;
+  rank: string;
+  points: number;
+  target: number;
+  medals: { label: string; color: string; count: number }[];
+}
+
+export async function getProfileForUser(userId: number): Promise<ProfileDto | null> {
+  const { rows: profiles } = await pool.query<{ id: number; name: string; rank: string; points: number; target: number }>(
+    'SELECT id, name, rank, points, target FROM profile WHERE user_id = $1',
+    [userId],
+  );
+  const profile = profiles[0];
+  if (!profile) return null;
+
+  const { rows: medals } = await pool.query<{ label: string; color: string; count: number }>(
+    'SELECT label, color, count FROM medals WHERE profile_id = $1 ORDER BY sort_order',
+    [profile.id],
+  );
+
+  return { name: profile.name, rank: profile.rank, points: profile.points, target: profile.target, medals };
+}
+
+router.use(requireAuth);
+
+router.get('/', async (req: AuthedRequest, res) => {
   try {
-    const { rows: profiles } = await pool.query<{ id: number; name: string; rank: string; points: number; target: number }>(
-      'SELECT id, name, rank, points, target FROM profile LIMIT 1',
-    );
-    const profile = profiles[0];
+    const profile = await getProfileForUser(req.userId!);
     if (!profile) { res.status(404).json({ error: 'Profile not found' }); return; }
-
-    const { rows: medals } = await pool.query<{ label: string; color: string; count: number }>(
-      'SELECT label, color, count FROM medals WHERE profile_id = $1 ORDER BY sort_order',
-      [profile.id],
-    );
-
-    res.json({ ...profile, medals });
+    res.json(profile);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Database error' });
   }
 });
 
-router.get('/routes', async (_req, res) => {
+router.get('/routes', async (req: AuthedRequest, res) => {
   try {
-    const { rows: profiles } = await pool.query<{ id: number }>('SELECT id FROM profile LIMIT 1');
+    const { rows: profiles } = await pool.query<{ id: number }>('SELECT id FROM profile WHERE user_id = $1', [req.userId]);
     const profile = profiles[0];
     if (!profile) { res.status(404).json({ error: 'Profile not found' }); return; }
 

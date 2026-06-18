@@ -1,6 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { AppStateService } from '../../services/app-state.service';
+import { AuthService } from '../../services/auth.service';
 import { RouteDataService, Route } from '../../services/route-data.service';
+
+const API = import.meta.env.NG_APP_API_URL;
 
 @Component({
   selector: 'app-profil',
@@ -11,25 +15,38 @@ import { RouteDataService, Route } from '../../services/route-data.service';
 })
 export class ProfilComponent {
   state = inject(AppStateService);
+  auth  = inject(AuthService);
   data  = inject(RouteDataService);
+  http  = inject(HttpClient);
 
-  readonly rider = { name: 'Léa M.', points: 3450, target: 5000 };
-  readonly progressPct = Math.round((3450 / 5000) * 100); // 69 %
-  readonly remaining   = 5000 - 3450; // 1 550
+  publishedRoutes = signal<Route[]>([]);
 
-  readonly medals = [
-    { label: 'Or',     color: '#E8B43A', count: 4  },
-    { label: 'Argent', color: '#B9BBC0', count: 9  },
-    { label: 'Bronze', color: '#C8895A', count: 12 },
-  ];
+  constructor() {
+    effect(() => {
+      if (this.auth.isAuthenticated()) {
+        this.http.get<Route[]>(`${API}/api/profile/routes`).subscribe({
+          next:  routes => this.publishedRoutes.set(routes),
+          error: ()     => this.publishedRoutes.set([]),
+        });
+      } else {
+        this.publishedRoutes.set([]);
+      }
+    });
+  }
 
-  get publishedRoutes(): Route[] {
-    return ['cretes', 'arzelier', 'nuit']
-      .map(id => this.data.get(id))
-      .filter((r): r is Route => !!r);
+  get progressPct(): number {
+    const p = this.auth.profile();
+    return p ? Math.round((p.points / p.target) * 100) : 0;
+  }
+
+  get remaining(): number {
+    const p = this.auth.profile();
+    return p ? Math.max(p.target - p.points, 0) : 0;
   }
 
   open(id: string): void { this.state.openRoute(id); }
+
+  logout(): void { this.auth.logout(); }
 
   tierColor(tier: string): string {
     return ({ vert: '#7E9B5B', bleu: '#1F4BA0', rouge: '#D4533A', noir: '#15140F' } as Record<string, string>)[tier] ?? '#1F4BA0';

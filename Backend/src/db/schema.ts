@@ -49,13 +49,24 @@ export async function ensureSchema(): Promise<void> {
       you      BOOLEAN      NOT NULL DEFAULT false
     );
 
-    CREATE TABLE IF NOT EXISTS profile (
-      id     SERIAL       PRIMARY KEY,
-      name   VARCHAR(100) NOT NULL,
-      rank   VARCHAR(20)  NOT NULL,
-      points INTEGER      NOT NULL,
-      target INTEGER      NOT NULL
+    CREATE TABLE IF NOT EXISTS users (
+      id            SERIAL       PRIMARY KEY,
+      email         VARCHAR(255) NOT NULL UNIQUE,
+      password_hash VARCHAR(255) NOT NULL,
+      created_at    TIMESTAMP    NOT NULL DEFAULT now()
     );
+
+    CREATE TABLE IF NOT EXISTS profile (
+      id      SERIAL       PRIMARY KEY,
+      user_id INTEGER      REFERENCES users(id) ON DELETE CASCADE,
+      name    VARCHAR(100) NOT NULL,
+      rank    VARCHAR(20)  NOT NULL,
+      points  INTEGER      NOT NULL,
+      target  INTEGER      NOT NULL
+    );
+
+    ALTER TABLE profile ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id) ON DELETE CASCADE;
+    CREATE UNIQUE INDEX IF NOT EXISTS profile_user_id_idx ON profile (user_id);
 
     CREATE TABLE IF NOT EXISTS medals (
       id         SERIAL      PRIMARY KEY,

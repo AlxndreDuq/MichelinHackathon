@@ -28,15 +28,25 @@
         <span class="masthead-title">MICHELIN</span>
         <span class="masthead-sub">Borne · Parcours</span>
       </div>
-      <div class="masthead-badge">
-        <span class="badge-dot">●</span> Rang Or
-      </div>
+      @if (auth.isAuthenticated()) {
+        <div class="masthead-badge">
+          <span class="badge-dot">●</span> Rang {{ auth.profile()?.rank }}
+        </div>
+      }
     </div>
 
-    <!-- Screen content (tabs or route detail overlay) -->
+    <!-- Screen content (auth gate, tabs, or route detail overlay) -->
     <div class="screen-content">
 
-      @if (state.openRun()) {
+      @if (auth.restoring()) {
+        <div class="session-loading popin">
+          <div class="spinner"></div>
+        </div>
+      } @else if (!auth.isAuthenticated()) {
+        <div class="tab-view popin">
+          <app-auth />
+        </div>
+      } @else if (state.openRun()) {
         <div class="tab-view popin">
           <app-route-detail />
         </div>
@@ -73,7 +83,9 @@
     </div>
 
     <!-- Bottom navigation -->
-    <app-bottom-nav />
+    @if (auth.isAuthenticated()) {
+      <app-bottom-nav />
+    }
 
   </div>
 </div>

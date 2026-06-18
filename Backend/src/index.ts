@@ -3,6 +3,7 @@ import cors from 'cors';
 import routesRouter  from './routes/routes.router.js';
 import boardRouter   from './routes/board.router.js';
 import profileRouter from './routes/profile.router.js';
+import authRouter    from './routes/auth.router.js';
 import { ensureSchema } from './db/schema.js';
 import { seedIfEmpty } from './seed.js';
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/api/routes',      routesRouter);
 app.use('/api/leaderboard', boardRouter);
 app.use('/api/profile',     profileRouter);
+app.use('/api/auth',        authRouter);
 
 app.get('/', (_req, res) => {
   res.json({ status: 'ok', version: '1.0.0' });

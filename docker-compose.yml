@@ -10,6 +10,7 @@ services:
       - /app/node_modules
     environment:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      - JWT_SECRET=${JWT_SECRET}
     command: sh -c "npm install --prefer-offline && npm run dev"
     depends_on:
       db:

@@ -3,19 +3,19 @@
   <!-- ── Profile header ─────────────────────────────────── -->
   <div class="profil-header">
     <div class="avatar">
-      <img src="/nature-cycling.png" alt="Avatar Léa">
+      <img src="/nature-cycling.png" [alt]="'Avatar ' + auth.profile()?.name">
     </div>
     <div class="rider-info">
-      <h2 class="rider-name">{{ rider.name }}</h2>
+      <h2 class="rider-name">{{ auth.profile()?.name }}</h2>
       <div class="ambassador-badge">
-        <span>●</span> Ambassadeur MICHELIN · Rang Or
+        <span>●</span> Ambassadeur MICHELIN · Rang {{ auth.profile()?.rank }}
       </div>
     </div>
   </div>
 
   <!-- ── Medals ──────────────────────────────────────────── -->
   <div class="medals-row">
-    @for (medal of medals; track medal.label) {
+    @for (medal of auth.profile()?.medals ?? []; track medal.label) {
       <div class="medal-tile">
         <div class="medal-disc" [style.background]="medal.color"></div>
         <span class="medal-label">{{ medal.label }}</span>
@@ -27,7 +27,7 @@
   <!-- ── Cagnotte MICHELIN ──────────────────────────────── -->
   <div class="cagnotte-card">
     <span class="cagnotte-pill">-10 % débloqué</span>
-    <p class="cagnotte-pts">{{ formatPts(rider.points) }}</p>
+    <p class="cagnotte-pts">{{ formatPts(auth.profile()?.points ?? 0) }}</p>
     <div class="progress-bar">
       <div class="progress-fill" [style.width.%]="progressPct"></div>
     </div>
@@ -38,8 +38,12 @@
   <div class="section">
     <h3 class="section-title">Mes parcours publiés</h3>
 
+    @if (publishedRoutes().length === 0) {
+      <p class="section-empty">Aucun parcours publié pour l'instant.</p>
+    }
+
     <div class="route-list">
-      @for (route of publishedRoutes; track route.id) {
+      @for (route of publishedRoutes(); track route.id) {
         <button class="route-row pressable" (click)="open(route.id)">
 
           <!-- Thumb -->
@@ -67,5 +71,15 @@
       }
     </div>
   </div>
+
+  <!-- ── Déconnexion ─────────────────────────────────────── -->
+  <button class="btn-secondary pressable logout-btn" (click)="logout()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+    Se déconnecter
+  </button>
 
 </div>

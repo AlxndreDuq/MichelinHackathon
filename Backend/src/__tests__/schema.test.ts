@@ -23,6 +23,7 @@ describe('ensureSchema', () => {
     expect(mockQuery).toHaveBeenCalledTimes(1);
     const sql: string = mockQuery.mock.calls[0][0] as string;
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS routes');
+    expect(sql).toContain('CREATE TABLE IF NOT EXISTS users');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS profile');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS medals');
     expect(sql).toContain('CREATE TABLE IF NOT EXISTS route_leaderboard');
