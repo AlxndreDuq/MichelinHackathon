@@ -72,18 +72,23 @@ function parseGpx(gpxContent: string): { coordinates: Array<{ lat: number; lon: 
   let totalDistance = 0;
   let totalElevation = 0;
 
-  // Extract trackpoint coordinates
-  const trkptRegex = /<trkpt lat="([\d.\-]+)" lon="([\d.\-]+)">[\s\S]*?(?:<ele>([\d.\-]+)<\/ele>)?[\s\S]*?<\/trkpt>/g;
+  // Extract all trkpt elements - more robust approach
+  const trkptRegex = /<trkpt\s+lat="([^"]+)"\s+lon="([^"]+)"[^>]*>([\s\S]*?)<\/trkpt>/g;
   let match;
 
   let prevLat: number | null = null;
   let prevLon: number | null = null;
   let prevEle: number | null = null;
+  const elevationThreshold = 0.5; // Ignore elevation changes smaller than 0.5m (GPS noise)
 
   while ((match = trkptRegex.exec(gpxContent)) !== null) {
     const lat = parseFloat(match[1]);
     const lon = parseFloat(match[2]);
-    const ele = match[3] ? parseFloat(match[3]) : null;
+    const trkptContent = match[3];
+    
+    // Extract elevation from the content of the trkpt tag
+    const eleMatch = trkptContent.match(/<ele>([^<]+)<\/ele>/);
+    const ele = eleMatch ? parseFloat(eleMatch[1]) : null;
 
     coordinates.push({ lat, lon });
 
@@ -97,11 +102,14 @@ function parseGpx(gpxContent: string): { coordinates: Array<{ lat: number; lon: 
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       totalDistance += R * c;
-    }
 
-    // Calculate elevation gain
-    if (ele !== null && prevEle !== null && ele > prevEle) {
-      totalElevation += ele - prevEle;
+      // Calculate elevation gain (only positive climbs)
+      if (ele !== null && prevEle !== null) {
+        const eleDiff = ele - prevEle;
+        if (eleDiff > elevationThreshold) {
+          totalElevation += eleDiff;
+        }
+      }
     }
 
     prevLat = lat;
@@ -109,10 +117,12 @@ function parseGpx(gpxContent: string): { coordinates: Array<{ lat: number; lon: 
     prevEle = ele;
   }
 
+  console.log(`GPX Parse Debug - Coords: ${coordinates.length}, Distance: ${totalDistance.toFixed(2)}km, Elevation: ${totalElevation.toFixed(0)}m`);
+
   return {
     coordinates,
     stats: {
-      distance: Math.round(totalDistance * 10) / 10, // Round to 1 decimal
+      distance: Math.round(totalDistance * 10) / 10,
       elevation: Math.round(totalElevation)
     }
   };
