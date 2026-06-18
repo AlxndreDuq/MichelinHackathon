@@ -5,6 +5,16 @@ export type Tier = 'vert' | 'bleu' | 'rouge' | 'noir';
 export type Bike = 'route' | 'gravel' | 'vtt';
 export type BoardScope = 'mensuel' | 'global';
 
+export interface GpxCoordinate {
+  lat: number;
+  lon: number;
+}
+
+export interface GpxStats {
+  distance: number;
+  elevation: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AppStateService {
   tab        = signal<Tab>('accueil');
@@ -14,6 +24,8 @@ export class AppStateService {
   boardScope = signal<BoardScope>('mensuel');
   cTier      = signal<Tier>('bleu');
   cBike      = signal<Bike>('gravel');
+  gpxCoordinates = signal<GpxCoordinate[]>([]);
+  gpxStats   = signal<GpxStats>({ distance: 0, elevation: 0 });
 
   setTab(t: Tab) {
     this.tab.set(t);
@@ -34,9 +46,16 @@ export class AppStateService {
   play()    { this.playing.set(true); }
   publish() { this.published.set(true); }
 
+  setGpxData(coordinates: GpxCoordinate[], stats: GpxStats) {
+    this.gpxCoordinates.set(coordinates);
+    this.gpxStats.set(stats);
+  }
+
   resetCreer() {
     this.published.set(false);
     this.cTier.set('bleu');
     this.cBike.set('gravel');
+    this.gpxCoordinates.set([]);
+    this.gpxStats.set({ distance: 0, elevation: 0 });
   }
 }

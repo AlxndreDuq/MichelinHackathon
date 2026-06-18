@@ -387,3 +387,72 @@
   text-transform: uppercase;
   letter-spacing: .05em;
 }
+
+/* ── GPX Stats ──────────────────────────────────────────── */
+.gpx-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: var(--cream);
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.stat-label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.stat-value {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ── Map container ──────────────────────────────────────── */
+.map-container {
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: white;
+}
+
+.map-element {
+  width: 100%;
+  height: 300px;
+}
+
+/* ── Leaflet overrides ──────────────────────────────────── */
+:deep(.leaflet-container) {
+  font-family: 'Nunito', sans-serif;
+  border-radius: var(--radius-card);
+}
+
+:deep(.leaflet-control-attribution) {
+  font-size: 11px;
+}
+
+:deep(.leaflet-popup-content-wrapper) {
+  border-radius: var(--radius-md);
+  border: 2px solid var(--ink);
+}
+
+:deep(.leaflet-popup-tip) {
+  background: white;
+}

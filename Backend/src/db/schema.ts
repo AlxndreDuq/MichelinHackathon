@@ -15,7 +15,9 @@ export async function ensureSchema(): Promise<void> {
       plays        INTEGER      NOT NULL DEFAULT 0,
       hot          BOOLEAN      NOT NULL DEFAULT false,
       bike         VARCHAR(10)  NOT NULL CHECK (bike IN ('route', 'gravel', 'vtt')),
-      note         TEXT         NOT NULL
+      note         TEXT         NOT NULL,
+      dept         VARCHAR(50),
+      gpx_coordinates JSONB
     );
 
     CREATE TABLE IF NOT EXISTS reviews (

@@ -14,23 +14,32 @@
       <h3 class="section-label">Le tracé</h3>
     </div>
 
-    <!-- Preview card -->
-    <div class="trace-card">
-      <div class="trace-photo">
-        <img src="/nature-cycling.png" alt="Aperçu du tracé">
-        <!-- Dashed yellow route SVG overlay -->
-        <svg class="trace-svg" viewBox="0 0 300 130" preserveAspectRatio="none" fill="none">
-          <path d="M 15,110 C 55,95 75,58 115,72 C 155,86 185,38 225,28 C 256,20 275,36 287,24"
-            stroke="#FFCB1A" stroke-width="3.5"
-            stroke-dasharray="8 5" stroke-linecap="round" opacity=".92"/>
-        </svg>
-        <span class="trace-badge">Aperçu du tracé</span>
+    @if(state.gpxStats().distance > 0) {
+      <!-- Map display -->
+      <div class="map-container">
+        <div #mapElement class="map-element" id="trace-map"></div>
       </div>
-    </div>
+    }
+    @else {
+      <!-- Preview card -->
+      <div class="trace-card">
+        <div class="trace-photo">
+          <img src="/nature-cycling.png" alt="Aperçu du tracé">
+          <!-- Dashed yellow route SVG overlay -->
+          <svg class="trace-svg" viewBox="0 0 300 130" preserveAspectRatio="none" fill="none">
+            <path d="M 15,110 C 55,95 75,58 115,72 C 155,86 185,38 225,28 C 256,20 275,36 287,24"
+              stroke="#FFCB1A" stroke-width="3.5"
+              stroke-dasharray="8 5" stroke-linecap="round" opacity=".92"/>
+          </svg>
+          <span class="trace-badge">Aperçu du tracé</span>
+        </div>
+      </div>
+    }
 
     <!-- Import / Draw buttons -->
     <div class="trace-btns">
-      <button class="btn-gpx pressable">
+      <input type="file" #gpxInput accept=".gpx" style="display: none;" (change)="onGpxSelected($event)">
+      <button class="btn-gpx pressable" (click)="gpxInput.click()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="17 8 12 3 7 8"/>
@@ -46,6 +55,20 @@
         Dessiner
       </button>
     </div>
+
+    <!-- GPX Stats Display -->
+    @if (state.gpxStats().distance > 0) {
+      <div class="gpx-stats">
+        <div class="stat-item">
+          <span class="stat-label">Distance </span>
+          <span class="stat-value">{{ state.gpxStats().distance }} km</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Dénivelé </span>
+          <span class="stat-value">{{ state.gpxStats().elevation }} m</span>
+        </div>
+      </div>
+    }
   </div>
 
   <!-- ── Section 2 : Les infos ─────────────────────────── -->

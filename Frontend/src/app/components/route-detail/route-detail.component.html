@@ -61,6 +61,16 @@
     </div>
   </div>
 
+  <!-- Route map -->
+  @if (r.gpx_coordinates) {
+    <div class="map-section">
+      <h3 class="section-title">Le tracé</h3>
+      <div class="map-container">
+        <div #mapElement class="map-element" id="route-detail-map"></div>
+      </div>
+    </div>
+  }
+
   <!-- Reco du créateur -->
   <div class="creator-reco">
     <div class="reco-header">

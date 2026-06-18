@@ -1,6 +1,11 @@
 export type Tier = 'vert' | 'bleu' | 'rouge' | 'noir';
 export type Bike = 'route' | 'gravel' | 'vtt';
 
+export interface GpxCoordinate {
+  lat: number;
+  lon: number;
+}
+
 export interface Route {
   id:          string;
   name:        string;
@@ -15,6 +20,8 @@ export interface Route {
   hot:         boolean;
   bike:        Bike;
   note:        string;
+  dept?:       string;
+  gpx_coordinates?: GpxCoordinate[];
 }
 
 export interface LeaderboardEntry {

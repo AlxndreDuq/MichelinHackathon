@@ -18,6 +18,8 @@ export interface Route {
   hot:         boolean;
   bike:        Bike;
   note:        string;
+  dept?:       string;
+  gpx_coordinates?: Array<{ lat: number; lon: number }>;
 }
 
 export interface LeaderboardEntry {
